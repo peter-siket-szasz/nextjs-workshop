@@ -1,13 +1,13 @@
 import csv from "csv-parser";
 import fs from "fs";
 
-import { ApiQuestion, QuestionWithAnswer } from "@/types/Question";
+import { CsvQuestion, QuestionWithAnswer } from "@/types/Question";
 
 export async function getQuestions(
   filePath: string
 ): Promise<QuestionWithAnswer[]> {
   return new Promise((resolve, reject) => {
-    const questions: ApiQuestion[] = [];
+    const questions: CsvQuestion[] = [];
     fs.createReadStream(filePath)
       .pipe(csv())
       .on("data", (data) => {
@@ -16,7 +16,7 @@ export async function getQuestions(
       .on("end", () => {
         resolve(
           questions.map((apiQuestion) => ({
-            id: apiQuestion.Question_id,
+            id: parseInt(apiQuestion.Question_id),
             question: apiQuestion.Question,
             option1: apiQuestion.Option_1,
             option2: apiQuestion.Option_2,

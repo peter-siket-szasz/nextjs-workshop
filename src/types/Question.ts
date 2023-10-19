@@ -1,4 +1,4 @@
-export interface ApiQuestion {
+export interface CsvQuestion {
   Question_id: string;
   Question: string;
   Option_1: string;
@@ -9,7 +9,7 @@ export interface ApiQuestion {
 }
 
 export interface Question {
-  id: string;
+  id: number;
   question: string;
   option1: string;
   option2: string;

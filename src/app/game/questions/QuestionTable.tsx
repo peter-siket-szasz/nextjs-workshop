@@ -5,6 +5,8 @@ import {
   GetQuestionsError,
   GetQuestionsResponse,
 } from "../../api/game/questions/route";
+import { Table } from "@/app/components/Table";
+import DeleteQuestionButton from "../components/DeleteQuestionButton";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -23,29 +25,20 @@ export const QuestionTable = () => {
   }
 
   return (
-    <table className="w-full bg-white border border-gray-300">
-      <thead>
-        <tr>
-          <th className="py-2 px-4 border-b">Question ID</th>
-          <th className="py-2 px-4 border-b">Question</th>
-          <th className="py-2 px-4 border-b">Option 1</th>
-          <th className="py-2 px-4 border-b">Option 2</th>
-          <th className="py-2 px-4 border-b">Option 3</th>
-          <th className="py-2 px-4 border-b">Option 4</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((question) => (
-          <tr key={question.id}>
-            <td className="py-2 px-4 border-b">{question.id}</td>
-            <td className="py-2 px-4 border-b">{question.option1}</td>
-            <td className="py-2 px-4 border-b">{question.option2}</td>
-            <td className="py-2 px-4 border-b">{question.option3}</td>
-            <td className="py-2 px-4 border-b">{question.option4}</td>
-            <td className="py-2 px-4 border-b">{question.question}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <Table
+      columns={[
+        { key: "id", label: "ID" },
+        { key: "question", label: "Question" },
+        { key: "option1", label: "Option 1" },
+        { key: "option2", label: "Option 2" },
+        { key: "option3", label: "Option 3" },
+        { key: "option4", label: "Option 4" },
+        { key: "delete", label: "Delete" },
+      ]}
+      rows={data.map((question) => ({
+        ...question,
+        delete: <DeleteQuestionButton id={question.id.toString()} />,
+      }))}
+    />
   );
 };
