@@ -1,5 +1,3 @@
-import Header from "./components/Header";
-import ButtonLink from "./components/ButtonLink";
 import GamePageHeader from "./components/GamePageHeader";
 
 export default function Home() {
