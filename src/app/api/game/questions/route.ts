@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 
 import { Question } from '@/types/Question';
 import { NextResponse } from 'next/server';
