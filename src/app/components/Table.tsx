@@ -1,5 +1,4 @@
-import { db } from "@/lib/db";
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export const Table = <Key extends string>(props: {
   columns: { key: Key; label: ReactNode }[];

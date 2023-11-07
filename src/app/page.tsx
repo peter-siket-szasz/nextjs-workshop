@@ -1,4 +1,4 @@
-import GamePageHeader from "./components/GamePageHeader";
+import GamePageHeader from './components/GamePageHeader';
 
 export default function Home() {
   return (

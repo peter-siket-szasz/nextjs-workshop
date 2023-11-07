@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import useSWRMutation from "swr/mutation";
+import useSWRMutation from 'swr/mutation';
 
 const deleteQuestion = (_url: string, { arg }: { arg: { id: string } }) =>
   fetch(`/api/game/question/${arg.id}`, {
-    method: "DELETE",
+    method: 'DELETE',
   });
 
 export default function DeleteQuestionButton(props: {
@@ -12,7 +12,7 @@ export default function DeleteQuestionButton(props: {
   reloadOnRefresh?: boolean;
 }) {
   const { trigger, isMutating } = useSWRMutation(
-    "/api/game/questions",
+    '/api/game/questions',
     deleteQuestion,
     {
       onSuccess: () => {

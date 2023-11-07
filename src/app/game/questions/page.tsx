@@ -1,5 +1,5 @@
-import { QuestionTable } from "./QuestionTable";
-import GamePageHeader from "@/app/components/GamePageHeader";
+import { QuestionTable } from './QuestionTable';
+import GamePageHeader from '@/app/components/GamePageHeader';
 
 const QuestionsPage = () => {
   return (

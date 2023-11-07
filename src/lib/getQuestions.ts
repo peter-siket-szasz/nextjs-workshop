@@ -1,7 +1,7 @@
-import csv from "csv-parser";
-import fs from "fs";
+import csv from 'csv-parser';
+import fs from 'fs';
 
-import { CsvQuestion, QuestionWithAnswer } from "@/types/Question";
+import { CsvQuestion, QuestionWithAnswer } from '@/types/Question';
 
 export async function getQuestions(
   filePath: string
@@ -10,10 +10,10 @@ export async function getQuestions(
     const questions: CsvQuestion[] = [];
     fs.createReadStream(filePath)
       .pipe(csv())
-      .on("data", (data) => {
+      .on('data', (data) => {
         questions.push(data);
       })
-      .on("end", () => {
+      .on('end', () => {
         resolve(
           questions.map((apiQuestion) => ({
             id: parseInt(apiQuestion.Question_id),
@@ -26,7 +26,7 @@ export async function getQuestions(
           }))
         );
       })
-      .on("error", (error) => {
+      .on('error', (error) => {
         reject(error);
       });
   });

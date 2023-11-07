@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
-import GoHomeButton from "./GoHomeButton";
-import Header from "./Header";
-import ButtonLink from "./ButtonLink";
+import GoHomeButton from './GoHomeButton';
+import Header from './Header';
+import ButtonLink from './ButtonLink';
 
 export default function GamePageHeader(props: { isRoot: boolean }) {
   return (

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { QuestionTable } from "./QuestionTable";
+import Link from 'next/link';
+import { QuestionTable } from './QuestionTable';
 
 const QuestionsPage = () => {
   return (

@@ -1,8 +1,8 @@
-import Link, { LinkProps } from "next/link";
-import { ComponentProps } from "react";
+import Link from 'next/link';
+import { ComponentProps } from 'react';
 
 export default function ButtonLink(
-  props: Omit<ComponentProps<typeof Link>, "className">
+  props: Omit<ComponentProps<typeof Link>, 'className'>
 ) {
   return (
     <Link
