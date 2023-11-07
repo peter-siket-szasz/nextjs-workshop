@@ -12,7 +12,7 @@ export default function GoHomeButton() {
         <polyline
           points="35,15 20,30 35,45"
           stroke="currentColor"
-          stroke-width="4"
+          strokeWidth="4"
           fill="none"
         />
       </svg>
