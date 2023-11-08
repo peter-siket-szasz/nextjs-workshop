@@ -12,17 +12,27 @@ async function selectRandomQuestion() {
   return randomQuestionId;
 }
 
-export async function GET(request: NextRequest, { params }: {params:{question: string, answer: string}}) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { question: string; answer: string } }
+) {
   const { question, answer } = params;
   try {
     assert(parseInt(question));
     assert(parseInt(answer));
   } catch (e) {
-    return Response.json({ status: 400, body: 'Question and answer must be integers' });
+    return Response.json({
+      status: 400,
+      body: 'Question and answer must be integers',
+    });
   }
 
   const nextQuestion = await selectRandomQuestion();
-  const res = await fetch(`${process.env.BACKEND_BASE_URL}/answer/`, { headers: { 'Content-type': 'application/json' }, method: 'POST', body: JSON.stringify({ question_id: question, selected_option_id: answer }) });
+  const res = await fetch(`${process.env.BACKEND_BASE_URL}/answer/`, {
+    headers: { 'Content-type': 'application/json' },
+    method: 'POST',
+    body: JSON.stringify({ question_id: question, selected_option_id: answer }),
+  });
   console.log(await res.json());
 
   return redirect(`/quiz/${nextQuestion}`);
