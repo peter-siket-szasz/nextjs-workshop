@@ -2,11 +2,10 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import JoinGame from '@/components/Buttons/JoinGame';
 import CreateGame from '@/components/Buttons/CreateGame';
-import Background from './components/Background';
 
 export default function Home() {
   return (
-    <Background>
+    <>
       <Navbar />
       <Flex
         height="90vh"
@@ -21,7 +20,7 @@ export default function Home() {
           bgClip="text"
           bgGradient="linear(to-l, #7928CA, #FF0080)"
         >
-          You have the choice
+          Let&apos;s play a game
         </Text>
         <Box
           width="50%"
@@ -34,6 +33,6 @@ export default function Home() {
           <JoinGame />
         </Box>
       </Flex>
-    </Background>
+    </>
   );
 }
