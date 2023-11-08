@@ -22,6 +22,8 @@ export async function GET(request: NextRequest, { params }: {params:{question: s
   }
 
   const nextQuestion = await selectRandomQuestion();
+  const res = await fetch(`${process.env.BACKEND_BASE_URL}/answer/`, { headers: { 'Content-type': 'application/json' }, method: 'POST', body: JSON.stringify({ question_id: question, selected_option_id: answer }) });
+  console.log(await res.json());
 
   return redirect(`/quiz/${nextQuestion}`);
 }
