@@ -1,8 +1,8 @@
-import { Box } from '@chakra-ui/react';
+import { LinkBox, LinkOverlay } from '@chakra-ui/react';
 
 export default function CreateGame() {
   return (
-    <Box
+    <LinkBox
       as="button"
       width="200px"
       height="45px"
@@ -18,7 +18,9 @@ export default function CreateGame() {
         borderColor: 'white',
       }}
     >
-      New Quiz
-    </Box>
+      <LinkOverlay href='/api/game/new'>
+        New Quiz
+      </LinkOverlay>
+    </LinkBox>
   );
 }

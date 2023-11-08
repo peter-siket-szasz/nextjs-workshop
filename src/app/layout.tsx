@@ -16,8 +16,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            const playerId = document.cookie.split(';').find((cookie) => cookie.startsWith('playerId='));
+            if (!playerId) {
+              const randomId = Math.floor(Math.random() * 1000000);
+              document.cookie = document.cookie + 'playerId=' + randomId + ';';
+            }
+          `,
+          }}
+        />
+      </head>
       <body className={`${inter.className} `}>
         <Providers>
           <Background>{children}</Background>

@@ -4,7 +4,9 @@ const csv = require('csv-parser');
 const fs = require('fs');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
+
+const games = [];
 
 app.use(bodyParser.json());
 
@@ -53,6 +55,17 @@ app.post('/answer', (req, res) => {
       res.status(400).json({ error: 'Question not found' });
     }
   }
+});
+
+app.post('/game', (req, res) => {
+  const { player_id } = req.body;
+  if (!player_id) {
+    res.status(400).json({ error: 'player_id is required' });
+    return;
+  }
+  games.push({ id: games.length, players: [{ player_id, score: 0, answered: 0 }] });
+  console.log(games);
+  res.json({ gameId: games.length });
 });
 
 app.listen(port, () => {
