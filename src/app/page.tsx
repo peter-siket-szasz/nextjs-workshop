@@ -1,32 +1,39 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
-import flock from '../../public/images/flock.png';
+import JoinGame from '@/components/Buttons/JoinGame';
+import CreateGame from '@/components/Buttons/CreateGame';
+import Background from './components/Background';
 
 export default function Home() {
   return (
-    <>
+    <Background>
       <Navbar />
-      <Box width="100vw" height="90vh">
-        <div
-          style={{
-            backgroundImage: `url('${flock.src}')`,
-            width: '90%',
-            height: '90%',
-            position: 'absolute',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-          }}
-        ></div>
-        <Flex alignItems="center">
-          <Box>
-            <Text fontSize="xl">You have the choice</Text>
-          </Box>
-          <Box margin="center" display="inline-grid">
-            <Button>New Quiz</Button>
-            <Button>Join Quiz</Button>
-          </Box>
-        </Flex>
-      </Box>
-    </>
+      <Flex
+        height="90vh"
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+        flexDirection="column"
+      >
+        <Text
+          as="b"
+          fontSize="100px"
+          bgClip="text"
+          bgGradient="linear(to-l, #7928CA, #FF0080)"
+        >
+          You have the choice
+        </Text>
+        <Box
+          width="50%"
+          alignItems="center"
+          justifyContent="center"
+          display="flex"
+          flexDirection="row"
+        >
+          <CreateGame />
+          <JoinGame />
+        </Box>
+      </Flex>
+    </Background>
   );
 }
