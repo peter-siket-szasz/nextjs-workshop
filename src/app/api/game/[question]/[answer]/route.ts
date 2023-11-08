@@ -12,8 +12,8 @@ async function selectRandomQuestion() {
   return randomQuestionId;
 }
 
-export async function GET(request: NextRequest, {params}: {params:{question: string, answer: string}}) {
-  const {question, answer} = params;
+export async function GET(request: NextRequest, { params }: {params:{question: string, answer: string}}) {
+  const { question, answer } = params;
   try {
     assert(parseInt(question));
     assert(parseInt(answer));

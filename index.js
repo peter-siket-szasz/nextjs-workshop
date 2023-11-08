@@ -24,7 +24,7 @@ app.get('/questions', (req, res) => {
   console.log(questions);
   const filtered_questions = (questions) => {
     return questions.map((question) => {
-      const {Correct_Option_Id, ...questionWithoutAnswer} = question;
+      const { Correct_Option_Id, ...questionWithoutAnswer } = question;
       return questionWithoutAnswer;
     })
   }
@@ -45,9 +45,9 @@ app.post('/answer', (req, res) => {
     const foundQuestion = questions.find(question => question.Question_id === question_id)
     if (foundQuestion) {
       if (foundQuestion.Correct_Option_Id === selected_option_id) {
-        res.status(200).json({ correct_answer: true, message: 'Correct Answer!'})
+        res.status(200).json({ correct_answer: true, message: 'Correct Answer!' })
       } else {
-        res.status(200).json({ correct_answer: false, message: 'Wrong Answer!'})
+        res.status(200).json({ correct_answer: false, message: 'Wrong Answer!' })
       }
     } else {
       res.status(400).json({ error: 'Question not found' });
