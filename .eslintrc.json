@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": ["*config.[jt]s"],
   "extends": "next/core-web-vitals",
   "plugins": ["unused-imports"],
   "rules": {

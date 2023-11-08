@@ -19,7 +19,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const nlLogo = 'images/boid'
+const nlLogo = 'images/boid';
 
 const NavLink = (props: Props) => {
   const { children } = props;
