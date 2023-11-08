@@ -1,9 +1,13 @@
 {
+  "ignorePatterns": ["*config.[jt]s"],
   "extends": "next/core-web-vitals",
   "plugins": ["unused-imports"],
   "rules": {
     "indent": ["error", 2],
     "quotes": ["error", "single"],
-    "unused-imports/no-unused-imports": "error"
+    "object-curly-spacing": ["error", "always"],
+    "semi": ["error", "always"],
+    "unused-imports/no-unused-imports": "error",
+    "max-len": ["error", { "code": 120 }]
   }
 }
