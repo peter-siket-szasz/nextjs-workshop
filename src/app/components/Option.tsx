@@ -1,11 +1,12 @@
+'use client';
 import { Card, CardHeader, Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 
-export default function Option({option}: {option?: string}) {
+export default function Option({option, href}: {option?: string, href?: string}) {
   return (
     <LinkBox key={option} as={Card} maxW='sm'>
       <CardHeader>
         <Heading size='md'>
-          <LinkOverlay href='#'>
+          <LinkOverlay  href={href}>
             {option}
           </LinkOverlay>
         </Heading>
