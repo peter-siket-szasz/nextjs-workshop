@@ -28,7 +28,7 @@ export default async function Question({ params }: { params: { id: string } }) {
         <SimpleGrid spacing={10} columns={2} justifyContent='center'>
           {[question?.option1, question?.option2, question?.option3, question?.option4].map((option, idx) => {
             return (
-              <Option option={option} href={`/api/game/answer/${params.id}/${idx + 1}`} key={option}/>
+              <Option option={option} href={`/api/game/${params.id}/${idx + 1}`} key={option}/>
             );
           })}
         </SimpleGrid>
