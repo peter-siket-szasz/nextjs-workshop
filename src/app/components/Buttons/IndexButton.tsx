@@ -1,12 +1,19 @@
 import { Box } from '@chakra-ui/react';
 
-export default function CreateGame() {
+type Props = {
+  width: string;
+  height: string;
+  label: string;
+  onClick: () => void;
+};
+
+export default function IndexButton({ width, height, label, onClick }: Props) {
   return (
     <Box
       as="button"
-      width="200px"
-      height="45px"
-      margin="20px"
+      width={width}
+      height={height}
+      margin="10px"
       borderWidth="3px"
       textColor="black"
       borderColor="white"
@@ -17,8 +24,9 @@ export default function CreateGame() {
         textColor: 'white',
         borderColor: 'white',
       }}
+      onClick={onClick}
     >
-      New Quiz
+      {label}
     </Box>
   );
 }

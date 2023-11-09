@@ -1,13 +1,6 @@
-import Option from '@/app/components/Option';
+import QuizOptionButton from '@/app/components/Buttons/QuizOptionButton';
 import { db } from '@/lib/db';
-import {
-  Box,
-  Card,
-  CardHeader,
-  Flex,
-  Heading,
-  SimpleGrid,
-} from '@chakra-ui/react';
+import { Box, Text, SimpleGrid } from '@chakra-ui/react';
 
 export async function generateStaticParams() {
   const questions = await db.selectFrom('questions').selectAll().execute();
@@ -27,18 +20,31 @@ export default async function Question({ params }: { params: { id: string } }) {
     .executeTakeFirst();
 
   return (
-    <Box width="100%" p={8}>
-      <Flex width="100%" justify="center" placeContent="center" mb={8}>
-        <Card width="80">
-          <CardHeader>
-            <Heading size="xl" textAlign="center">
-              {question?.question}
-            </Heading>
-          </CardHeader>
-        </Card>
-      </Flex>
+    <Box
+      width="100%"
+      height="90vh"
+      padding="8"
+      alignItems="center"
+      justifyContent="center"
+      display="flex"
+      flexDirection="column"
+    >
       <Box>
-        <SimpleGrid spacing={10} columns={2} justifyContent="center">
+        <Text as="i">Question No. {params.id}</Text>
+      </Box>
+      <Box width="100" justifyContent="center" placeContent="center" mb={20}>
+        <Text
+          as="b"
+          fontSize="70px"
+          bgClip="text"
+          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          textAlign="center"
+        >
+          {question?.question}
+        </Text>
+      </Box>
+      <Box>
+        <SimpleGrid spacing={20} columns={2} justifyContent="center">
           {[
             question?.option1,
             question?.option2,
@@ -46,7 +52,7 @@ export default async function Question({ params }: { params: { id: string } }) {
             question?.option4,
           ].map((option, idx) => {
             return (
-              <Option
+              <QuizOptionButton
                 option={option}
                 href={`/api/game/${params.id}/${idx + 1}`}
                 key={option}

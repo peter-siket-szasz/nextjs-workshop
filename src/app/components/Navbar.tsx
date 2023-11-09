@@ -12,7 +12,7 @@ export default function Navbar() {
         <Flex alignItems="center">
           <Box>
             <Text as="i" color="#E2DFF4">
-              Amazing game incomming ...
+              Play an amazing game ...
             </Text>
           </Box>
         </Flex>
