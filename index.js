@@ -33,6 +33,10 @@ app.get('/questions', (req, res) => {
   res.json(filtered_questions(questions));
 });
 
+app.get('/games', (req, res) => {
+  res.json({ ids: games.map(game => game.id.toString()) });
+});
+
 
 // API route to post answers
 app.post('/answer', (req, res) => {
@@ -63,9 +67,9 @@ app.post('/game', (req, res) => {
     res.status(400).json({ error: 'player_id is required' });
     return;
   }
-  const gameId = games.length;
+  const gameId = games.length + 1;
   games.push({ id: gameId, players: [{ player_id, score: 0, answered: 0 }] });
-  console.log(games);
+  console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}`));
   res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + player_id });
 });
 

@@ -13,18 +13,20 @@ export async function generateStaticParams() {
   const questions = await db.selectFrom('questions').selectAll().execute();
   const params = questions.map((question) => {
     return {
-      id: question.id.toString(),
+      questionId: question.id.toString(),
     };
   });
   return params;
 }
 
-export default async function Question({ params }: { params: { id: string } }) {
+export default async function Question({ params }: { params: { gameId: string, questionId: string } }) {
+  console.log(params);
   const question = await db
     .selectFrom('questions')
     .selectAll()
-    .where('id', '=', parseInt(params.id))
+    .where('id', '=', parseInt(params.questionId))
     .executeTakeFirst();
+  console.log(question);
 
   return (
     <Box width="100%" p={8}>
@@ -33,6 +35,7 @@ export default async function Question({ params }: { params: { id: string } }) {
           <CardHeader>
             <Heading size="xl" textAlign="center">
               {question?.question}
+              {params.gameId}
             </Heading>
           </CardHeader>
         </Card>
@@ -48,7 +51,7 @@ export default async function Question({ params }: { params: { id: string } }) {
             return (
               <Option
                 option={option}
-                href={`/api/game/${params.id}/${idx + 1}`}
+                href={`/api/game/${params.questionId}/${idx + 1}`}
                 key={option}
               />
             );
