@@ -26,7 +26,7 @@ app.get('/questions', (req, res) => {
   console.log(questions);
   const filtered_questions = (questions) => {
     return questions.map((question) => {
-      const { Correct_Option_Id, ...questionWithoutAnswer } = question;
+      const { correctOptionId, ...questionWithoutAnswer } = question;
       return questionWithoutAnswer;
     });
   };
@@ -50,49 +50,49 @@ app.get('/game/:id', (req, res) => {
 
 // API route to post answers
 app.post('/answer', (req, res) => {
-  const { player_id, game_id, question_id, selected_option_id } = req.body;
+  const { playerId, gameId, questionId, answer } = req.body;
 
-  if (!player_id) {
-    res.status(400).json({ error: 'player_id is required' });
+  if (!playerId) {
+    res.status(400).json({ error: 'playerId is required' });
     return;
   }
-  if (!game_id, !question_id || !selected_option_id) {
-    res.status(400).json({ error: 'game_id, question_id and selected_option_id are required' });
+  if (!gameId, !questionId || !answer) {
+    res.status(400).json({ error: 'gameId, questionId and answer are required' });
     return;
   }
 
-  const game = findGame(game_id);
+  const game = findGame(gameId);
   console.log(game);
-  const player = game.players.find(player => player.player_id === player_id);
+  const player = game.players.find(player => player.playerId === playerId);
   console.log(player);
-  const question = questions.find(question => parseInt(question.Question_id) === question_id);
-  const playerHasQuestion = player.questions.includes(question_id);
+  const question = questions.find(question => parseInt(question.questionId) === questionId);
+  const playerHasQuestion = player.questions.includes(questionId);
   console.log(question);
   if (playerHasQuestion) {
-    player.questions.splice(player.questions.indexOf(question_id), 1);
-    if (question.Correct_Option_Id === selected_option_id) {
+    player.questions.splice(player.questions.indexOf(questionId), 1);
+    if (question.correctOptionId === answer) {
       player.score += 100;
     }
   } else {
     console.log('question not in list');
   };
   const nextQuestion = player.questions.length ? player.questions[0] : null;
-  res.json({ nextQuestion, receivedAnswer: selected_option_id, correctAnswer: parseInt(question.Correct_Option_Id) });
+  res.json({ nextQuestion, receivedAnswer: answer, correctAnswer: parseInt(question.correctOptionId) });
 });
 
 app.post('/game', (req, res) => {
-  const { player_id } = req.body;
-  if (!player_id) {
-    res.status(400).json({ error: 'player_id is required' });
+  const { playerId } = req.body;
+  if (!playerId) {
+    res.status(400).json({ error: 'playerId is required' });
     return;
   }
   const gameId = games.length + 1;
   const randomQuestions = generateRandomQuestionList(5);
-  games.push({ id: gameId, players: [{ player_id, score: 0, questions: randomQuestions }] });
+  games.push({ id: gameId, players: [{ playerId, score: 0, questions: randomQuestions }] });
   console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}, [
     ${game.players.map(player => `${player.questions.length}]`)
 }`));
-  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + player_id });
+  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + playerId });
 });
 
 function findGame(gameId) {

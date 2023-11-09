@@ -32,7 +32,7 @@ export async function GET(
   const res = await fetch(`${process.env.BACKEND_BASE_URL}/answer/`, {
     headers: { 'Content-type': 'application/json' },
     method: 'POST',
-    body: JSON.stringify({ question_id: questionId, selected_option_id: answer }),
+    body: JSON.stringify({ questionId, answer }),
   });
   console.log(await res.json());
 

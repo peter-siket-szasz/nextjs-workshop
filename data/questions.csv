@@ -1,4 +1,4 @@
-Question_id,Question,Option_1,Option_2,Option_3,Option_4,Correct_Option_Id
+questionId,question,option1,option2,option3,option4,correctOptionId
 1,What is 2 + 2?,3,4,5,6,2
 2,Which planet is closest to the Sun?,Earth,Venus,Mercury,Mars,3
 3,What is the capital of France?,London,Paris,Berlin,Rome,2
