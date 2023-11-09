@@ -1,3 +1,23 @@
-Question_id,Question,Option_1,Option_2,Option_3,Option_4,Correct_Option_Id
+questionId,question,option1,option2,option3,option4,correctOptionId
 1,What is 2 + 2?,3,4,5,6,2
 2,Which planet is closest to the Sun?,Earth,Venus,Mercury,Mars,3
+3,What is the capital of France?,London,Paris,Berlin,Rome,2
+4,What is the square root of 16?,2,3,4,5,3
+5,Who wrote 'To Kill a Mockingbird'?,Ernest Hemingway,Harper Lee,Mark Twain,John Steinbeck,2
+6,What is the chemical symbol for Hydrogen?,H,He,Hy,Hg,1
+7,What is the largest ocean?,Atlantic,Pacific,Indian,Arctic,2
+8,Who painted the Mona Lisa?,Vincent van Gogh,Leonardo da Vinci,Pablo Picasso,Michelangelo,2
+9,What is the tallest mountain?,K2,Everest,Kilimanjaro,Denali,2
+10,What is the distance from Earth to the Sun?,93 million miles,39 million miles,149.6 million kilometers,1.496 x 10^8 kilometers,1
+11,Who discovered penicillin?,Marie Curie,Alexander Fleming,Isaac Newton,Albert Einstein,2
+12,What is the speed of light?,299,792,458 m/s,3.00 x 10^8 m/s,186,282 miles per second,All of the above,4
+13,What is the largest planet in our solar system?,Earth,Jupiter,Mars,Venus,2
+14,Who is the author of '1984'?,George Orwell,John Steinbeck,Ernest Hemingway,Mark Twain,1
+15,What is the capital of Australia?,Sydney,Melbourne,Canberra,Perth,3
+16,What is the smallest continent?,Australia,Africa,Europe,Antarctica,1
+17,What is the longest river?,Nile,Amazon,Yangtze,Mississippi,2
+18,What is the hottest planet in our solar system?,Mercury,Venus,Earth,Mars,2
+19,Who invented the telephone?,Thomas Edison,Alexander Graham Bell,Nikola Tesla,Albert Einstein,2
+20,What is the capital of Canada?,Toronto,Vancouver,Ottawa,Montreal,3
+21,What is the square root of 81?,7,8,9,10,3
+22,Who wrote 'Pride and Prejudice'?,Jane Austen,Emily Bronte,Mark Twain,Ernest Hemingway,1
