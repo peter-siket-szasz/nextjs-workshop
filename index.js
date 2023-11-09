@@ -35,6 +35,8 @@ const questions = [];
 fs.createReadStream('./data/questions.csv')
   .pipe(csv())
   .on('data', (data) => {
+    data.questionId = parseInt(data.questionId);
+    data.correctOptionId = parseInt(data.correctOptionId);
     questions.push(data);
   })
   .on('end', () => {
@@ -55,7 +57,7 @@ function generateRandomQuestionList(n) {
   Array.from({ length: n }).forEach(() => {
     // Later make sure no duplicates are added
     const randomIndex = Math.floor(Math.random() * questions.length);
-    questionList.push(randomIndex);
+    questionList.push(randomIndex + 1); // Question ids start from 1
   });
   return questionList;
 }
@@ -88,6 +90,58 @@ app.get('/game/:id', (req, res) => {
   }
 });
 
+/** Endpoint for creating a game. Creates a game object and stores it.
+  By default the requester is added to the player list.
+  Request body should be of the form:
+  {
+    playerId: string
+  }
+  Response is of the form:
+  {
+    gameId: number,
+    message/error: string
+  }
+*/
+app.post('/game/new', (req, res) => {
+  const { playerId } = req.body;
+  if (!playerId) {
+    res.status(400).json({ error: 'playerId is required' });
+    return;
+  }
+  const gameId = games.length + 1;
+  const randomQuestions = generateRandomQuestionList(5);
+  games.push({ id: gameId, players: [{ playerId, score: 0, questions: randomQuestions }] });
+  console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}, [
+    ${game.players.map(player => `${player.questions.length}]`)
+}`));
+  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + playerId });
+});
+
+app.post('/game/join', (req, res) => {
+  const { playerId, gameId } = req.body;
+  if (!playerId) {
+    res.status(400).json({ error: 'playerId is required' });
+    return;
+  }
+  if (!gameId) {
+    res.status(400).json({ error: 'gameId is required' });
+    return;
+  }
+  const game = findGame(parseInt(gameId));
+  if (!game) {
+    res.status(400).json({ error: 'Game not found' });
+    return;
+  }
+  const player = game.players.find(player => player.playerId === playerId);
+  if (player) {
+    res.status(400).json({ error: 'Player already exists in game' });
+    return;
+  }
+  const randomQuestions = generateRandomQuestionList(5);
+  game.players.push({ playerId, score: 0, questions: randomQuestions });
+  res.json({ message: 'Player added to game' });
+});
+
 
 /** API route to post answers 
   Request body should be of the form:
@@ -117,12 +171,10 @@ app.post('/answer', (req, res) => {
   }
 
   const game = findGame(gameId);
-  console.log(game);
   const player = game.players.find(player => player.playerId === playerId);
-  console.log(player);
-  const question = questions.find(question => parseInt(question.questionId) === questionId);
+  const question = questions.find(question => question.questionId === questionId);
   const playerHasQuestion = player.questions.includes(questionId);
-  console.log(question);
+  // Update game if player answered own question
   if (playerHasQuestion) {
     player.questions.splice(player.questions.indexOf(questionId), 1);
     if (question.correctOptionId === answer) {
@@ -132,34 +184,21 @@ app.post('/answer', (req, res) => {
     console.log('question not in list');
   };
   const nextQuestion = player.questions.length ? player.questions[0] : null;
-  res.json({ nextQuestion, receivedAnswer: answer, correctAnswer: parseInt(question.correctOptionId) });
+  res.json({ nextQuestion, receivedAnswer: answer, correctAnswer: question.correctOptionId });
 });
 
-/** Endpoint for creating a game. Creates a game object and stores it.
-  By default the requester is added to the player list.
-  Request body should be of the form:
-  {
-    playerId: string
-  }
-  Response is of the form:
-  {
-    gameId: number,
-    message/error: string
-  }
-*/
-app.post('/game/new', (req, res) => {
-  const { playerId } = req.body;
-  if (!playerId) {
-    res.status(400).json({ error: 'playerId is required' });
+/** API route for getting rankings */
+app.get('/ranking/:gameId', (req, res) => {
+  const gameId = parseInt(req.params.gameId);
+  const game = findGame(gameId);
+  if (!game) {
+    res.status(400).json({ error: 'Game not found' });
     return;
   }
-  const gameId = games.length + 1;
-  const randomQuestions = generateRandomQuestionList(5);
-  games.push({ id: gameId, players: [{ playerId, score: 0, questions: randomQuestions }] });
-  console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}, [
-    ${game.players.map(player => `${player.questions.length}]`)
-}`));
-  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + playerId });
+  const ranking = game.players
+    .sort((a, b) => b.score - a.score)
+    .map(player => ({ playerId: player.playerId, score: player.score }));
+  res.json(ranking);
 });
 
 app.listen(port, () => {
