@@ -22,16 +22,15 @@ export default function JoinGameButton() {
         width="220px"
         height="50px"
         margin="10px"
-        paddingRight="130px"
+        paddingRight="100px"
         variant="filled"
         value={value}
         onChange={handleChange}
-        placeholder="#gameId"
-        borderColor="white"
+        placeholder="#quizId"
         borderRadius="md"
         background="white"
         textColor="#7928CA"
-        _focusVisible={{ borderColor: '#FF0080' }}
+        _focusVisible={{ borderColor: 'white' }}
       />
       <InputRightElement width="110px" height="50px">
         <Box marginRight="10px">
