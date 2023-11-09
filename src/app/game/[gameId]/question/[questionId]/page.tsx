@@ -1,12 +1,9 @@
-import Option from '@/app/components/Option';
+import QuizOptionButton from '@/app/components/Buttons/QuizOptionButton';
 import { db } from '@/lib/db';
 import {
   Box,
-  Card,
-  CardHeader,
-  Flex,
-  Heading,
   SimpleGrid,
+  Text,
 } from '@chakra-ui/react';
 
 export async function generateStaticParams() {
@@ -29,19 +26,31 @@ export default async function Question({ params }: { params: { gameId: string, q
   console.log(question);
 
   return (
-    <Box width="100%" p={8}>
-      <Flex width="100%" justify="center" placeContent="center" mb={8}>
-        <Card width="80">
-          <CardHeader>
-            <Heading size="xl" textAlign="center">
-              {question?.question}
-              {params.gameId}
-            </Heading>
-          </CardHeader>
-        </Card>
-      </Flex>
+    <Box
+      width="100%"
+      height="90vh"
+      padding="8"
+      alignItems="center"
+      justifyContent="center"
+      display="flex"
+      flexDirection="column"
+    >
       <Box>
-        <SimpleGrid spacing={10} columns={2} justifyContent="center">
+        <Text as="i">Question No. {params.questionId}</Text>
+      </Box>
+      <Box width="100" justifyContent="center" placeContent="center" mb={20}>
+        <Text
+          as="b"
+          fontSize="70px"
+          bgClip="text"
+          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          textAlign="center"
+        >
+          {question?.question}
+        </Text>
+      </Box>
+      <Box>
+        <SimpleGrid spacing={20} columns={2} justifyContent="center">
           {[
             question?.option1,
             question?.option2,
@@ -49,7 +58,7 @@ export default async function Question({ params }: { params: { gameId: string, q
             question?.option4,
           ].map((option, idx) => {
             return (
-              <Option
+              <QuizOptionButton
                 option={option}
                 href={`/api/game/${params.questionId}/${idx + 1}`}
                 key={option}
