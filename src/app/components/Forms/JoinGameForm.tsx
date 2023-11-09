@@ -30,7 +30,7 @@ export default function JoinGameForm() {
     >
       <FormControl>
         <InputField id="game" placeholder="#gameId" register={register} />
-        <InputField id="name" placeholder="#name" register={register} />
+        <InputField id="name" placeholder="#yourName" register={register} />
       </FormControl>
       <JoinGameButton
         label="Join Quiz"

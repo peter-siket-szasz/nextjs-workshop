@@ -1,22 +1,40 @@
 'use client';
 
-import { Box } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box } from '@chakra-ui/react';
 import IndexButton from './IndexButton';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function CreateGameButton() {
-  const router = useRouter();
-  const id = 1;
-  const questionId = 27;
+  const [createdGameId, setCreatedGameId] = useState('');
+
+  async function createGame() {
+    try {
+      await fetch('/api/game/new', {
+        method: 'GET',
+      })
+        .then((res) => res.json())
+        .then((data) => setCreatedGameId(data.body.gameId));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
-    <Box>
-      <IndexButton
-        width="100px"
-        height="50px"
-        label="New Quiz"
-        onClick={() => router.push(`/game/${id}/question/${questionId}`)}
-      ></IndexButton>
-    </Box>
+    <>
+      <Box>
+        <IndexButton
+          width="100px"
+          height="50px"
+          label="New Quiz"
+          onClick={createGame}
+        ></IndexButton>
+      </Box>
+      {createdGameId != '' ?? (
+        <Alert status="info">
+          <AlertIcon />A game with id {createdGameId} has been successfully
+          created.
+        </Alert>
+      )}
+    </>
   );
 }
