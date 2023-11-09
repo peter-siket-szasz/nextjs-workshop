@@ -147,7 +147,7 @@ app.post('/answer', (req, res) => {
     message/error: string
   }
 */
-app.post('/game', (req, res) => {
+app.post('/game/new', (req, res) => {
   const { playerId } = req.body;
   if (!playerId) {
     res.status(400).json({ error: 'playerId is required' });
