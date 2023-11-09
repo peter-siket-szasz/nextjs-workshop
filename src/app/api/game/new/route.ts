@@ -10,10 +10,10 @@ export async function GET() {
     body: JSON.stringify({ player_id: playerId }),
   });
 
-  const { gameId } = await response.json();
+  const bodyJson = await response.json();
 
   return Response.json({
-    status: 200,
-    body: 'Game created with id: ' + gameId + ' for player id: ' + playerId,
+    status: response.status,
+    body: bodyJson,
   });
 }

@@ -26,7 +26,7 @@ export default function RootLayout({
             const playerId = document.cookie.split(';').find((cookie) => cookie.startsWith('playerId='));
             if (!playerId) {
               const randomId = Math.floor(Math.random() * 1000000);
-              document.cookie = document.cookie + 'playerId=' + randomId + ';';
+              document.cookie = 'playerId=' + randomId + ';';
             }
           `,
           }}

@@ -63,9 +63,10 @@ app.post('/game', (req, res) => {
     res.status(400).json({ error: 'player_id is required' });
     return;
   }
-  games.push({ id: games.length, players: [{ player_id, score: 0, answered: 0 }] });
+  const gameId = games.length;
+  games.push({ id: gameId, players: [{ player_id, score: 0, answered: 0 }] });
   console.log(games);
-  res.json({ gameId: games.length });
+  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + player_id });
 });
 
 app.listen(port, () => {
