@@ -60,7 +60,7 @@ export default async function Question({ params }: { params: { gameId: string, q
             return (
               <QuizOptionButton
                 option={option}
-                href={`/api/game/${params.questionId}/${idx + 1}`}
+                href={`/api/game/${params.gameId}/${params.questionId}/${idx + 1}`}
                 key={option}
               />
             );

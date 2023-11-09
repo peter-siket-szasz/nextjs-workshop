@@ -14,16 +14,17 @@ async function selectRandomQuestion() {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { question: string; answer: string } }
+  { params }: { params: { gameId: string, questionId: string; answer: string } }
 ) {
-  const { question, answer } = params;
+  const { gameId, questionId, answer } = params;
   try {
-    assert(parseInt(question));
+    assert(parseInt(gameId));
+    assert(parseInt(questionId));
     assert(parseInt(answer));
   } catch (e) {
     return Response.json({
       status: 400,
-      body: 'Question and answer must be integers',
+      body: 'Question, answer and game must be integers',
     });
   }
 
@@ -31,9 +32,9 @@ export async function GET(
   const res = await fetch(`${process.env.BACKEND_BASE_URL}/answer/`, {
     headers: { 'Content-type': 'application/json' },
     method: 'POST',
-    body: JSON.stringify({ question_id: question, selected_option_id: answer }),
+    body: JSON.stringify({ question_id: questionId, selected_option_id: answer }),
   });
   console.log(await res.json());
 
-  return redirect(`/quiz/${nextQuestion}`);
+  return redirect(`/game/${gameId}/question/${nextQuestion}`);
 }
