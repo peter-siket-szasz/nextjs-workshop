@@ -37,28 +37,47 @@ app.get('/games', (req, res) => {
   res.json({ ids: games.map(game => game.id.toString()) });
 });
 
+app.get('/game/:id', (req, res) => {
+  const gameId = parseInt(req.params.id);
+  const game = findGame(gameId);
+  if (game) {
+    res.json(game);
+  } else {
+    res.status(400).json({ error: 'Game not found' });
+  }
+});
+
 
 // API route to post answers
 app.post('/answer', (req, res) => {
-  const { question_id, selected_option_id } = req.body;
+  const { player_id, game_id, question_id, selected_option_id } = req.body;
 
-  if (!question_id || !selected_option_id) {
-    res.status(400).json({ error: 'Both question_id and selected_option_id are required' });
+  if (!player_id) {
+    res.status(400).json({ error: 'player_id is required' });
+    return;
+  }
+  if (!game_id, !question_id || !selected_option_id) {
+    res.status(400).json({ error: 'game_id, question_id and selected_option_id are required' });
     return;
   }
 
-  if (question_id && selected_option_id) {
-    const foundQuestion = questions.find(question => question.Question_id === question_id);
-    if (foundQuestion) {
-      if (foundQuestion.Correct_Option_Id === selected_option_id) {
-        res.status(200).json({ correct_answer: true, message: 'Correct Answer!' });
-      } else {
-        res.status(200).json({ correct_answer: false, message: 'Wrong Answer!' });
-      }
-    } else {
-      res.status(400).json({ error: 'Question not found' });
+  const game = findGame(game_id);
+  console.log(game);
+  const player = game.players.find(player => player.player_id === player_id);
+  console.log(player);
+  const question = questions.find(question => parseInt(question.Question_id) === question_id);
+  const playerHasQuestion = player.questions.includes(question_id);
+  console.log(question);
+  if (playerHasQuestion) {
+    player.questions.splice(player.questions.indexOf(question_id), 1);
+    if (question.Correct_Option_Id === selected_option_id) {
+      player.score += 100;
     }
-  }
+  } else {
+    console.log('question not in list');
+  };
+  const nextQuestion = player.questions.length ? player.questions[0] : null;
+  res.json({ nextQuestion, receivedAnswer: selected_option_id, correctAnswer: parseInt(question.Correct_Option_Id) });
 });
 
 app.post('/game', (req, res) => {
@@ -68,10 +87,27 @@ app.post('/game', (req, res) => {
     return;
   }
   const gameId = games.length + 1;
-  games.push({ id: gameId, players: [{ player_id, score: 0, answered: 0 }] });
-  console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}`));
+  const randomQuestions = generateRandomQuestionList(5);
+  games.push({ id: gameId, players: [{ player_id, score: 0, questions: randomQuestions }] });
+  console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}, [
+    ${game.players.map(player => `${player.questions.length}]`)
+}`));
   res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + player_id });
 });
+
+function findGame(gameId) {
+  return games.find(game => game.id === gameId);
+}
+
+function generateRandomQuestionList(n) {
+  const questionList = [];
+  Array.from({ length: n }).forEach(() => {
+    // Later make sure no duplicates are added
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    questionList.push(randomIndex);
+  });
+  return questionList;
+}
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
