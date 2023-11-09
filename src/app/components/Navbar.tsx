@@ -4,7 +4,7 @@ import netlightLogo from '../../../public/images/boid.png';
 
 export default function Navbar() {
   return (
-    <Box bg="black.100" px={4} height="10vh">
+    <Box px={4} height="10vh">
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Box width="50px" alignItems="center">
           <NextImage src={netlightLogo} alt="logo" />

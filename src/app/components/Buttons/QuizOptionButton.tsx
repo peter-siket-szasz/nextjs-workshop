@@ -1,25 +1,62 @@
 'use client';
 
 import { Box } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
 import IndexButton from './IndexButton';
 
+const CorrectAnswerStyling = {
+  textColor: 'white',
+  background: 'green',
+};
+
+const WrongAnswerStyling = {
+  textColor: 'white',
+  background: 'puprle',
+};
+
 export default function QuizOptionButton({
-  option,
-  href,
+  key,
+  text,
+  onClick,
+  state,
 }: {
-  option?: string;
-  href: string;
+  key: number;
+  text: string;
+  onClick: () => {};
+  state: boolean | null;
 }) {
-  const router = useRouter();
-  return (
-    <Box key={option}>
-      <IndexButton
-        width="300px"
-        height="100px"
-        label={option ?? ''}
-        onClick={() => router.push(href)}
-      ></IndexButton>
-    </Box>
-  );
+  if (state == null) {
+    // if no option has been selected yet
+    return (
+      <Box key={key}>
+        <IndexButton
+          width="300px"
+          height="100px"
+          label={text}
+          onClick={onClick}
+        ></IndexButton>
+      </Box>
+    );
+  } else {
+    // give feedback to the user
+    return (
+      <Box key={key}>
+        <IndexButton
+          width="300px"
+          height="100px"
+          label={text}
+          onClick={() => {}}
+          textColor={
+            state
+              ? CorrectAnswerStyling.textColor
+              : WrongAnswerStyling.textColor
+          }
+          background={
+            state
+              ? CorrectAnswerStyling.background
+              : WrongAnswerStyling.background
+          }
+        ></IndexButton>
+      </Box>
+    );
+  }
 }

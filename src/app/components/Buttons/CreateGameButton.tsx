@@ -6,13 +6,16 @@ import { useRouter } from 'next/navigation';
 
 export default function CreateGameButton() {
   const router = useRouter();
+  const id = 1;
+  const questionId = 27;
+
   return (
     <Box>
       <IndexButton
-        width="200px"
+        width="100px"
         height="50px"
         label="New Quiz"
-        onClick={() => router.push('/quiz/1')}
+        onClick={() => router.push(`/game/${id}/question/${questionId}`)}
       ></IndexButton>
     </Box>
   );
