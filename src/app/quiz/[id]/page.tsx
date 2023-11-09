@@ -1,4 +1,6 @@
 import QuizOptionButton from '@/app/components/Buttons/QuizOptionButton';
+import FancyHeading from '@/app/components/FancyHeading';
+import PageContentWrapper from '@/app/components/PageContentWrapper';
 import { db } from '@/lib/db';
 import { Box, Text, SimpleGrid } from '@chakra-ui/react';
 
@@ -20,28 +22,12 @@ export default async function Question({ params }: { params: { id: string } }) {
     .executeTakeFirst();
 
   return (
-    <Box
-      width="100%"
-      height="90vh"
-      padding="8"
-      alignItems="center"
-      justifyContent="center"
-      display="flex"
-      flexDirection="column"
-    >
+    <PageContentWrapper>
       <Box>
         <Text as="i">Question No. {params.id}</Text>
       </Box>
-      <Box width="100" justifyContent="center" placeContent="center" mb={20}>
-        <Text
-          as="b"
-          fontSize="70px"
-          bgClip="text"
-          bgGradient="linear(to-l, #7928CA, #FF0080)"
-          textAlign="center"
-        >
-          {question?.question}
-        </Text>
+      <Box width="100" mb={20}>
+        <FancyHeading text={question?.question ?? ''} fontSize="70px" />
       </Box>
       <Box>
         <SimpleGrid spacing={20} columns={2} justifyContent="center">
@@ -61,6 +47,6 @@ export default async function Question({ params }: { params: { id: string } }) {
           })}
         </SimpleGrid>
       </Box>
-    </Box>
+    </PageContentWrapper>
   );
 }
