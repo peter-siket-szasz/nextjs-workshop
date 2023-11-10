@@ -32,9 +32,7 @@ export default function JoinGameForm() {
         <InputField id="game" placeholder="#gameId" register={register} />
         <InputField id="name" placeholder="#yourName" register={register} />
       </FormControl>
-      <JoinGameButton
-        label="Join Quiz"
-      />
+      <JoinGameButton />
     </form>
   );
 }
