@@ -87,7 +87,7 @@ app.get('/question/:id', (req, res) => {
     const { correctOptionId, ...questionWithoutAnswer } = question;
     res.json(questionWithoutAnswer);
   } else {
-    res.status(400).json({ error: 'Question not found' });
+    res.status(404).json({ error: 'Question not found' });
   }
 });
 
@@ -103,7 +103,7 @@ app.get('/game/:id', (req, res) => {
   if (game) {
     res.json(game);
   } else {
-    res.status(400).json({ error: 'Game not found' });
+    res.status(404).json({ error: 'Game not found' });
   }
 });
 
@@ -155,7 +155,7 @@ app.post('/game/join', (req, res) => {
 
   const game = findGame(parseInt(gameId));
   if (!game) {
-    res.status(400).json({ error: 'Game not found' });
+    res.status(404).json({ error: 'Game not found' });
     return;
   }
   
