@@ -237,7 +237,7 @@ app.get('/ranking/:gameId', (req, res) => {
   }
   const ranking = game.players
     .sort((a, b) => b.score - a.score)
-    .map(player => ({ playerId: player.playerId, score: player.score }));
+    .map(player => ({ playerId: player.playerId, score: player.score, playerName: player.playerName }));
   res.json(ranking);
 });
 
