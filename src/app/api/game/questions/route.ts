@@ -10,7 +10,7 @@ export async function GET(req: NextApiRequest) {
   try {
     const response = await fetch(`${process.env.BACKEND_BASE_URL}/questions`);
     const questions: Question[] = await response.json();
-    return NextResponse.json(questions);
+    return NextResponse.json<Question[]>(questions);
   } catch (error) {
     console.error(error);
     return NextResponse.json<GetQuestionsError>(
