@@ -53,11 +53,16 @@ function findGame(gameId) {
 
 /** Generates a list of random questions and returns them as a list */
 function generateRandomQuestionList(n) {
+  if (n > questions.length) {
+    throw new Error('Requested more questions than available');
+  }
   const questionList = [];
+  const questionsCopy = [...questions];
   Array.from({ length: n }).forEach(() => {
     // Later make sure no duplicates are added
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    questionList.push(randomIndex + 1); // Question ids start from 1
+    const randomIndex = Math.floor(Math.random() * questionsCopy.length);
+    const randomQuestion = questionsCopy.splice(randomIndex, 1)[0];
+    questionList.push(randomQuestion.questionId); // Question ids start from 1
   });
   return questionList;
 }
@@ -72,6 +77,18 @@ app.get('/questions', (req, res) => {
     });
   };
   res.json(filtered_questions(questions));
+});
+
+/** API route to get a specific question */
+app.get('/question/:id', (req, res) => {
+  const questionId = parseInt(req.params.id);
+  const question = questions.find(question => question.questionId === questionId);
+  if (question) {
+    const { correctOptionId, ...questionWithoutAnswer } = question;
+    res.json(questionWithoutAnswer);
+  } else {
+    res.status(400).json({ error: 'Question not found' });
+  }
 });
 
 /** API route to get all games */
@@ -91,7 +108,6 @@ app.get('/game/:id', (req, res) => {
 });
 
 /** Endpoint for creating a game. Creates a game object and stores it.
-  By default the requester is added to the player list.
   Request body should be of the form:
   {
     playerId: string
@@ -109,37 +125,61 @@ app.post('/game/new', (req, res) => {
     return;
   }
   const gameId = games.length + 1;
-  const randomQuestions = generateRandomQuestionList(5);
-  games.push({ id: gameId, players: [{ playerId, score: 0, questions: randomQuestions }] });
+  games.push({ id: gameId, players: [] });
   console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}, [
     ${game.players.map(player => `${player.questions.length}]`)
 }`));
-  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + ' for player id: ' + playerId });
+  res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + '. Requested by player id: ' + playerId });
 });
 
+/** Endpoint for joining a game.
+ * If player is not in the game, they get added. If the player is already in, they don't get added again.
+ * Request body should be of the form: 
+ * {
+ *  playerId: string,
+ *  playerName: string,
+ *  gameId: number
+ * }
+ * Response is of the form:
+ * {
+ *  nextQuestion: number/null,
+ *  playerAdded: boolean,
+ * }
+ * */
 app.post('/game/join', (req, res) => {
-  const { playerId, gameId } = req.body;
-  if (!playerId) {
-    res.status(400).json({ error: 'playerId is required' });
+  const { playerId, playerName, gameId } = req.body;
+  if (!playerId || !gameId) {
+    res.status(400).json({ error: 'gameId and playerId are required' });
     return;
   }
-  if (!gameId) {
-    res.status(400).json({ error: 'gameId is required' });
-    return;
-  }
+
   const game = findGame(parseInt(gameId));
   if (!game) {
     res.status(400).json({ error: 'Game not found' });
     return;
   }
-  const player = game.players.find(player => player.playerId === playerId);
-  if (player) {
-    res.status(400).json({ error: 'Player already exists in game' });
-    return;
+  
+  let player;
+  let playerAdded = false;
+  player = game.players.find(player => player.playerId === playerId);
+
+  if (!player) {
+    let randomQuestions;
+    try {
+      randomQuestions = generateRandomQuestionList(10);
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ error: 'Error while assigning questions' });
+      return;
+    }
+    player = { playerId, playerName: playerName || 'Guest', score: 0, questions: randomQuestions };
+    game.players.push(player);
+    playerAdded = true;
   }
-  const randomQuestions = generateRandomQuestionList(5);
-  game.players.push({ playerId, score: 0, questions: randomQuestions });
-  res.json({ message: 'Player added to game' });
+
+  const nextQuestion = player.questions.length ? player.questions[0] : null;
+  
+  res.json({ nextQuestion, playerAdded });
 });
 
 
@@ -158,7 +198,7 @@ app.post('/game/join', (req, res) => {
     correctAnswer: number
   }
 */
-app.post('/answer', (req, res) => {
+app.post('/game/answer', (req, res) => {
   const { playerId, gameId, questionId, answer } = req.body;
 
   if (!playerId) {
