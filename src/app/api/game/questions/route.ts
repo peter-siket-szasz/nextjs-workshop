@@ -2,17 +2,15 @@ import { NextApiRequest } from 'next';
 
 import { Question } from '@/types/Question';
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
 
 export type GetQuestionsResponse = Question[];
 export type GetQuestionsError = { error: string };
 
 export async function GET(req: NextApiRequest) {
   try {
-    const questions = await db.selectFrom('questions').selectAll().execute();
-    return NextResponse.json<GetQuestionsResponse>(
-      questions.map(({ answer, ...question }) => question)
-    );
+    const response = await fetch(`${process.env.BACKEND_BASE_URL}/questions`);
+    const questions: Question[] = await response.json();
+    return NextResponse.json(questions);
   } catch (error) {
     console.error(error);
     return NextResponse.json<GetQuestionsError>(

@@ -1,11 +1,11 @@
 export interface CsvQuestion {
-  Question_id: string;
-  Question: string;
-  Option_1: string;
-  Option_2: string;
-  Option_3: string;
-  Option_4: string;
-  Correct_Option_Id: string;
+  questionId: string;
+  question: string;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
+  correctOptionId: string;
 }
 
 export interface Question {
@@ -18,5 +18,5 @@ export interface Question {
 }
 
 export interface QuestionWithAnswer extends Question {
-  answer: number;
+  correctOptionId: number;
 }
