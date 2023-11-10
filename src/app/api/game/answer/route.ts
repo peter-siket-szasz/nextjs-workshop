@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { ErrorResponse } from '@/types/ErrorResponse';
 
 interface AnswerRequest {
   gameId: number;
@@ -24,17 +25,20 @@ export async function POST(
   const cookieStore = cookies();
   const playerId = cookieStore.get('playerId')?.value;
 
-  const res = await fetch(`${process.env.BACKEND_BASE_URL}/game/answer`, {
+  const response = await fetch(`${process.env.BACKEND_BASE_URL}/game/answer`, {
     headers: { 'Content-type': 'application/json' },
     method: 'POST',
     body: JSON.stringify({ questionId, answer, gameId, playerId }),
   });
-  if (!res.ok) {
-    return NextResponse.json<AnswerErrorResponse>(
-      { error: 'Internal server error' },
-      { status: 500, statusText: 'Internal server error' }
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    return NextResponse.json<ErrorResponse>(
+      { error },
+      { status: response.status, statusText: 'Internal server error' }
     );
   }
-  const { nextQuestion, receivedAnswer, correctAnswer }: AnswerResponse = await res.json();
+
+  const { nextQuestion, receivedAnswer, correctAnswer }: AnswerResponse = await response.json();
   return NextResponse.json<AnswerResponse>({ nextQuestion, receivedAnswer, correctAnswer });
 }

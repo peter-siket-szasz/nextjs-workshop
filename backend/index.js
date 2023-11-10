@@ -172,13 +172,14 @@ app.post('/game/join', (req, res) => {
       res.status(500).json({ error: 'Error while assigning questions' });
       return;
     }
+
     player = { playerId, playerName: playerName || 'Guest', score: 0, questions: randomQuestions };
     game.players.push(player);
     playerAdded = true;
   }
 
   const nextQuestion = player.questions.length ? player.questions[0] : null;
-  
+
   res.json({ nextQuestion, playerAdded });
 });
 
@@ -232,7 +233,7 @@ app.get('/ranking/:gameId', (req, res) => {
   const gameId = parseInt(req.params.gameId);
   const game = findGame(gameId);
   if (!game) {
-    res.status(400).json({ error: 'Game not found' });
+    res.status(404).json({ error: 'Game not found' });
     return;
   }
   const ranking = game.players

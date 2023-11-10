@@ -2,18 +2,19 @@ import { NextApiRequest } from 'next';
 
 import { NextResponse } from 'next/server';
 import { Question } from '@/types/Question';
-import { GetQuestionsError } from '../../questions/route';
+import { ErrorResponse } from '@/types/ErrorResponse';
 
 export async function GET(req: NextApiRequest, { params }: {params: {id: string}}) {
-  try {
-    const response = await fetch(`${process.env.BACKEND_BASE_URL}/question/${params.id}`);
-    const question: Question = await response.json();
-    return NextResponse.json<Question>(question);
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json<GetQuestionsError>(
-      { error: 'Internal server error' },
-      { status: 500, statusText: 'Internal server error' }
+  const response = await fetch(`${process.env.BACKEND_BASE_URL}/question/${params.id}`);
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    return NextResponse.json<ErrorResponse>(
+      { error },
+      { status: response.status, statusText: 'Internal server error' }
     );
   }
+
+  const question: Question = await response.json();
+  return NextResponse.json<Question>(question);
 }

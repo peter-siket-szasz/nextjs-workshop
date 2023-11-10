@@ -1,4 +1,6 @@
+import { ErrorResponse } from '@/types/ErrorResponse';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 export async function POST() {
   const cookieStore = cookies();
@@ -9,6 +11,14 @@ export async function POST() {
     method: 'POST',
     body: JSON.stringify({ playerId }),
   });
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    return NextResponse.json<ErrorResponse>(
+      { error },
+      { status: response.status, statusText: 'Internal server error' }
+    );
+  }
 
   const bodyJson = await response.json();
 
