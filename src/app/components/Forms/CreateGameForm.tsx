@@ -14,7 +14,7 @@ export default function CreateGameForm() {
   const { data, trigger, error } = useSWRMutation('/api/game/new', createGame);
 
   useEffect(() => {
-    setCreatedGameId(data?.body?.gameId);
+    setCreatedGameId(data?.id);
   }, [data]);
 
   if (!createdGameId) {
