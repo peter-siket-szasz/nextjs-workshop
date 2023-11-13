@@ -1,11 +1,6 @@
+import { QuestionWithoutId } from '@/types/Question';
 import { Generated } from 'kysely';
 
-export interface QuestionTable {
+export interface QuestionTable extends QuestionWithoutId {
   id: Generated<number>;
-  question: string;
-  option1: string;
-  option2: string;
-  option3: string;
-  option4: string;
-  correctOptionId: number;
 }
