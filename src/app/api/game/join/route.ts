@@ -16,8 +16,7 @@ export async function POST(request: NextRequest) {
   let { gameId }: JoinGameRequest = await request.json();
 
   const cookieStore = cookies();
-  // const token = cookieStore.get('playerId')?.value;
-  const token = '642985';
+  const token = cookieStore.get('playerId')?.value;
 
   if (!token) {
     return NextResponse.json<ErrorResponse>(
