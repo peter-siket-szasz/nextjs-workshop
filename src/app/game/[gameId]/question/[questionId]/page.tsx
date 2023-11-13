@@ -1,8 +1,6 @@
-import FancyHeading from '@/app/components/FancyHeading';
 import PageContentWrapper from '@/app/components/PageContentWrapper';
 import { QuestionForm } from '@/app/components/Forms/QuizForm';
 import { db } from '@/lib/db';
-import { Text } from '@chakra-ui/react';
 
 export async function generateStaticParams() {
   const questions = await db.selectFrom('questions').selectAll().execute();
@@ -14,22 +12,17 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default async function Question({
-  params,
-}: {
-  params: { gameId: string; questionId: string };
-}) {
-  const question = await db
-    .selectFrom('questions')
-    .selectAll()
-    .where('id', '=', parseInt(params.questionId))
-    .executeTakeFirst();
+type Props = {
+  params: {
+    gameId: string;
+    questionId: string;
+  };
+};
 
+export default async function QuestionPage({ params }: Props) {
   return (
     <PageContentWrapper>
-      <Text as="i">Question No. {params.questionId}</Text>
-      <FancyHeading text={question?.question ?? ''} fontSize="70px" />
-      <QuestionForm gameId={params.gameId} question={question} />
+      <QuestionForm gameId={params.gameId} questionId={params.questionId} />
     </PageContentWrapper>
   );
 }

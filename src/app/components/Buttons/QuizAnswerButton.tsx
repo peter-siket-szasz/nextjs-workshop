@@ -13,7 +13,7 @@ const WrongAnswerStyling = {
   background: 'puprle',
 };
 
-export default function QuizOptionButton({
+export default function QuizAnswerButton({
   key,
   text,
   onClick,
