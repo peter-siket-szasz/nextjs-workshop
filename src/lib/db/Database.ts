@@ -1,3 +1,4 @@
+import { Generated } from 'kysely';
 import { GameTable } from './GameTable';
 import { PlayerTable } from './PlayerTable';
 import { QuestionTable } from './QuestionTable';
@@ -7,12 +8,12 @@ export interface Database {
   games: GameTable;
   players: PlayerTable;
   // Bridge tables
-  gamePlayerTable: {
+  gamePlayer: {
     gameId: number;
     playerId: number;
-    score: number;
+    score: Generated<number>;
   };
-  gamePlayerQuestionTable: {
+  gamePlayerQuestion: {
     gameId: number;
     playerId: number;
     questionId: number;

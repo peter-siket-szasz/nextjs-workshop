@@ -49,17 +49,18 @@ export async function up() {
 
   console.log('Created "player" table');
 
-  const createPlayerGameTable = await db.schema
-    .createTable('player_game')
+  const createGamePlayerTable = await db.schema
+    .createTable('game_player')
     .ifNotExists()
     .addColumn('playerId', 'integer', (cb) => cb.references('players.id').notNull())
     .addColumn('gameId', 'integer', (cb) => cb.references('games.id').notNull())
+    .addColumn('score', 'integer', (cb) => cb.defaultTo(0).notNull())
     .execute();
 
   console.log('Created "player_game" table');
 
-  const createPlayerGameQuestionTable = await db.schema
-    .createTable('player_game_question')
+  const createGamePlayerQuestionTable = await db.schema
+    .createTable('game_player_question')
     .ifNotExists()
     .addColumn('playerId', 'integer', (cb) => cb.references('players.id').notNull())
     .addColumn('gameId', 'integer', (cb) => cb.references('games.id').notNull())
@@ -72,8 +73,8 @@ export async function up() {
     createQuestionTable,
     createGameTable,
     createPlayerTable,
-    createPlayerGameTable,
-    createPlayerGameQuestionTable,
+    createGamePlayerTable,
+    createGamePlayerQuestionTable,
   };
 }
 
