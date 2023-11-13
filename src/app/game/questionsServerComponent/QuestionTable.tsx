@@ -1,10 +1,11 @@
 import { Table } from '@/components/Table';
 import { db } from '@/lib/db';
 import DeleteQuestionButton from '../components/DeleteQuestionButton';
+import { Question } from '@/types/Question';
 
 export const QuestionTable = async () => {
   // const data = await getQuestions("./data/questions.csv");
-  const data = await db.selectFrom('questions').selectAll().execute();
+  const data: Question[] = await db.selectFrom('questions').selectAll().execute();
 
   return (
     <Table
@@ -19,9 +20,7 @@ export const QuestionTable = async () => {
       ]}
       rows={data.map((question) => ({
         ...question,
-        delete: (
-          <DeleteQuestionButton id={question.id.toString()} reloadOnRefresh />
-        ),
+        delete: <DeleteQuestionButton id={question.id.toString()} reloadOnRefresh />,
       }))}
     />
   );

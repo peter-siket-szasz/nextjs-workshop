@@ -1,15 +1,12 @@
 import { db } from '@/lib/db';
 import { ErrorResponse } from '@/types/ErrorResponse';
+import { Game } from '@/types/Game';
 import { NextResponse } from 'next/server';
 
-export async function POST() {
+export async function GET() {
   try {
-    const response = await db
-      .insertInto('games')
-      .values({ createdBy: 123 })
-      .returning(['id', 'createdAt', 'createdBy'])
-      .executeTakeFirst();
-    return NextResponse.json(response);
+    const games = await db.selectFrom('games').selectAll().execute();
+    return NextResponse.json<Game[]>(games);
   } catch (error) {
     console.error(error);
     return NextResponse.json<ErrorResponse>(

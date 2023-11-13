@@ -3,9 +3,7 @@ import fs from 'fs';
 
 import { CsvQuestion, QuestionWithAnswer } from '@/types/Question';
 
-export async function getQuestions(
-  filePath: string
-): Promise<QuestionWithAnswer[]> {
+export async function getQuestions(filePath: string): Promise<QuestionWithAnswer[]> {
   return new Promise((resolve, reject) => {
     const questions: CsvQuestion[] = [];
     fs.createReadStream(filePath)
@@ -16,14 +14,14 @@ export async function getQuestions(
       .on('end', () => {
         resolve(
           questions.map((apiQuestion) => ({
-            id: parseInt(apiQuestion.Question_id),
-            question: apiQuestion.Question,
-            option1: apiQuestion.Option_1,
-            option2: apiQuestion.Option_2,
-            option3: apiQuestion.Option_3,
-            option4: apiQuestion.Option_4,
-            answer: parseInt(apiQuestion.Correct_Option_Id),
-          }))
+            id: parseInt(apiQuestion.questionId),
+            question: apiQuestion.question,
+            option1: apiQuestion.option1,
+            option2: apiQuestion.option2,
+            option3: apiQuestion.option3,
+            option4: apiQuestion.option4,
+            correctOptionId: parseInt(apiQuestion.correctOptionId),
+          })),
         );
       })
       .on('error', (error) => {
