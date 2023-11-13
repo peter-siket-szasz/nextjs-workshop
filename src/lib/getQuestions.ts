@@ -1,9 +1,9 @@
 import csv from 'csv-parser';
 import fs from 'fs';
 
-import { CsvQuestion, Question } from '@/types/Question';
+import { CsvQuestion, QuestionWithAnswer } from '@/types/Question';
 
-export async function getQuestions(filePath: string): Promise<Question[]> {
+export async function getQuestions(filePath: string): Promise<QuestionWithAnswer[]> {
   return new Promise((resolve, reject) => {
     const questions: CsvQuestion[] = [];
     fs.createReadStream(filePath)

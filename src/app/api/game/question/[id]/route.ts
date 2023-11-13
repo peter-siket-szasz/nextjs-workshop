@@ -1,18 +1,17 @@
 import { NextApiRequest } from 'next';
 
 import { NextResponse } from 'next/server';
-import { Question, QuestionWithoutAnswer } from '@/types/Question';
+import { Question, QuestionWithAnswer } from '@/types/Question';
 import { db } from '@/lib/db';
 import { ErrorResponse } from '@/types/ErrorResponse';
 
 export async function GET(req: NextApiRequest, { params }: { params: { id: string } }) {
   try {
-    const question: Question | undefined = await db
+    const question: QuestionWithAnswer | undefined = await db
       .selectFrom('questions')
       .selectAll()
       .where('id', '=', parseInt(params.id))
       .executeTakeFirst();
-
     if (!question)
       return NextResponse.json<ErrorResponse>(
         { error: 'Question not found' },
@@ -20,7 +19,7 @@ export async function GET(req: NextApiRequest, { params }: { params: { id: strin
       );
 
     const { correctOptionId, ...questionWithoutAnswer } = question;
-    return NextResponse.json<QuestionWithoutAnswer>(questionWithoutAnswer);
+    return NextResponse.json<Question>(questionWithoutAnswer);
   } catch (error) {
     console.error(error);
     return NextResponse.json<ErrorResponse>(

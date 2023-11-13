@@ -3,13 +3,13 @@
 import useSWR from 'swr';
 import { Table } from '@/components/Table';
 import DeleteQuestionButton from '../components/DeleteQuestionButton';
+import { Question } from '@/types/Question';
 import { ErrorResponse } from '@/types/ErrorResponse';
-import { QuestionWithoutAnswer } from '@/types/Question';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const QuestionTable = () => {
-  const { data, error } = useSWR<QuestionWithoutAnswer[], ErrorResponse>('/api/game/questions', fetcher);
+  const { data, error } = useSWR<Question[], ErrorResponse>('/api/game/questions', fetcher);
 
   if (error) {
     return <div>Error loading questions</div>;

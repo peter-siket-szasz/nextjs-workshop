@@ -7,7 +7,9 @@ export interface CsvQuestion {
   option4: string;
   correctOptionId: string;
 }
-export interface BaseQuestion {
+
+export interface Question {
+  id: number;
   question: string;
   option1: string;
   option2: string;
@@ -15,14 +17,6 @@ export interface BaseQuestion {
   option4: string;
 }
 
-export interface QuestionWithoutId extends BaseQuestion {
+export interface QuestionWithAnswer extends Question {
   correctOptionId: number;
-}
-
-export interface Question extends QuestionWithoutId {
-  id: number;
-}
-
-export interface QuestionWithoutAnswer extends BaseQuestion {
-  id: number;
 }
