@@ -19,9 +19,7 @@ export const QuestionTable = async () => {
       ]}
       rows={data.map((question) => ({
         ...question,
-        delete: (
-          <DeleteQuestionButton id={question.id.toString()} reloadOnRefresh />
-        ),
+        delete: <DeleteQuestionButton id={question.id.toString()} reloadOnRefresh />,
       }))}
     />
   );

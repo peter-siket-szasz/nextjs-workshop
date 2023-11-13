@@ -1,20 +1,14 @@
 'use client';
 
 import useSWR from 'swr';
-import {
-  GetQuestionsError,
-  GetQuestionsResponse,
-} from '../../api/game/questions/route';
+import { GetQuestionsError, GetQuestionsResponse } from '../../api/game/questions/route';
 import { Table } from '@/components/Table';
 import DeleteQuestionButton from '../components/DeleteQuestionButton';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const QuestionTable = () => {
-  const { data, error } = useSWR<GetQuestionsResponse, GetQuestionsError>(
-    '/api/game/questions',
-    fetcher
-  );
+  const { data, error } = useSWR<GetQuestionsResponse, GetQuestionsError>('/api/game/questions', fetcher);
 
   if (error) {
     return <div>Error loading questions</div>;
