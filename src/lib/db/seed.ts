@@ -2,6 +2,10 @@ import { db } from '@/lib/db';
 import { getQuestions } from '../getQuestions';
 
 export async function seed() {
+  const dropTable = await db.schema.dropTable('questions').ifExists().execute();
+
+  console.log('Dropped "questions" table');
+
   const createTable = await db.schema
     .createTable('questions')
     .ifNotExists()
@@ -11,21 +15,22 @@ export async function seed() {
     .addColumn('option2', 'varchar(255)')
     .addColumn('option3', 'varchar(255)')
     .addColumn('option4', 'varchar(255)')
-    .addColumn('answer', 'integer')
+    .addColumn('correctOptionId', 'integer')
     .execute();
 
   console.log('Created "questions" table');
 
   const questions = await getQuestions('./data/questions.csv');
 
-  const addUsers = await db
+  const addQuestions = await db
     .insertInto('questions')
     .values(questions.map(({ id, ...questionWithoutId }) => questionWithoutId))
     .execute();
   console.log('Seeded database with questions');
 
   return {
+    dropTable,
     createTable,
-    addUsers,
+    addQuestions,
   };
 }

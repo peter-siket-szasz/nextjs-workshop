@@ -2,19 +2,20 @@ import { NextApiRequest } from 'next';
 
 import { NextResponse } from 'next/server';
 import { Question } from '@/types/Question';
-import { ErrorResponse } from '@/types/ErrorResponse';
+import { db } from '@/lib/db';
 
-export async function GET(req: NextApiRequest, { params }: {params: {id: string}}) {
-  const response = await fetch(`${process.env.BACKEND_BASE_URL}/question/${params.id}`);
-
-  if (!response.ok) {
-    const { error } = await response.json();
-    return NextResponse.json<ErrorResponse>(
-      { error },
-      { status: response.status, statusText: 'Internal server error' }
-    );
+export async function GET(req: NextApiRequest, { params }: { params: { id: string } }) {
+  try {
+    const question: Question | undefined = await db
+      .selectFrom('questions')
+      .selectAll()
+      .where('id', '=', parseInt(params.id))
+      .executeTakeFirst();
+    return question
+      ? NextResponse.json<Question>(question)
+      : NextResponse.json({ error: 'Question not found' }, { status: 404, statusText: 'Question not found' });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500, statusText: 'Internal server error' });
   }
-
-  const question: Question = await response.json();
-  return NextResponse.json<Question>(question);
 }

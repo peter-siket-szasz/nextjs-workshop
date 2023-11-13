@@ -2,21 +2,17 @@ import { NextApiRequest } from 'next';
 
 import { Question } from '@/types/Question';
 import { NextResponse } from 'next/server';
+import { db } from '@/lib/db';
 
 export type GetQuestionsResponse = Question[];
 export type GetQuestionsError = { error: string };
 
 export async function GET(req: NextApiRequest) {
-  const response = await fetch(`${process.env.BACKEND_BASE_URL}/questions`);
-
-  if (!response.ok) {
-    const { error } = await response.json();
-    return NextResponse.json<GetQuestionsError>(
-      { error },
-      { status: response.status, statusText: 'Internal server error' }
-    );
+  try {
+    const questions: Question[] = await db.selectFrom('questions').selectAll().execute();
+    return NextResponse.json<Question[]>(questions);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500, statusText: 'Internal server error' });
   }
-
-  const questions: Question[] = await response.json();
-  return NextResponse.json<Question[]>(questions);
 }

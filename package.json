@@ -15,6 +15,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@vercel/postgres-kysely": "^0.5.0",
+    "csv-parser": "^3.0.0",
     "framer-motion": "^10.16.4",
     "kysely": "^0.26.3",
     "next": "13.5.5",
