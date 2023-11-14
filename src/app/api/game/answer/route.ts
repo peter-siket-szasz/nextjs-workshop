@@ -1,44 +1,81 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { ErrorResponse } from '@/types/ErrorResponse';
+import { db } from '@/lib/db';
 
 interface AnswerRequest {
   gameId: number;
   questionId: number;
   answer: number;
+  token?: string;
 }
 
 interface AnswerResponse {
-  nextQuestion: number;
-  receivedAnswer: boolean;
+  nextQuestion: number | undefined;
+  receivedAnswer: number;
   correctAnswer: boolean;
 }
 
-interface AnswerErrorResponse {
-  error: string;
-}
+export async function POST(request: NextRequest) {
+  let { gameId, questionId, answer, token }: AnswerRequest = await request.json();
 
-export async function POST(
-  request: NextRequest,
-) {
-  let { gameId, questionId, answer }: AnswerRequest = await request.json();
   const cookieStore = cookies();
-  const playerId = cookieStore.get('playerId')?.value;
+  token ||= cookieStore.get('playerId')?.value;
 
-  const response = await fetch(`${process.env.BACKEND_BASE_URL}/game/answer`, {
-    headers: { 'Content-type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify({ questionId, answer, gameId, playerId }),
-  });
-
-  if (!response.ok) {
-    const { error } = await response.json();
+  if (!token) {
     return NextResponse.json<ErrorResponse>(
-      { error },
-      { status: response.status, statusText: 'Internal server error' }
+      { error: 'No player cookie found' },
+      { status: 400, statusText: 'Bad request' },
     );
   }
 
-  const { nextQuestion, receivedAnswer, correctAnswer }: AnswerResponse = await response.json();
-  return NextResponse.json<AnswerResponse>({ nextQuestion, receivedAnswer, correctAnswer });
+  try {
+    const correctAnswerId = (
+      await db.selectFrom('questions').select('correctOptionId').where('id', '=', questionId).executeTakeFirst()
+    )?.correctOptionId;
+
+    const playerId = (await db.selectFrom('players').select('id').where('token', '=', token).executeTakeFirst())?.id;
+    if (!playerId) {
+      return NextResponse.json<ErrorResponse>(
+        { error: 'Player not found' },
+        { status: 404, statusText: 'Player not found' },
+      );
+    }
+
+    const removeQuestionFromPlayer = await db
+      .deleteFrom('gamePlayerQuestion')
+      .where('playerId', '=', playerId)
+      .where('questionId', '=', questionId)
+      .where('gameId', '=', gameId)
+      .execute();
+
+    const isAnswerCorrect = correctAnswerId === answer;
+
+    if (isAnswerCorrect) {
+      await db
+        .updateTable('gamePlayer')
+        .set((eb) => ({ score: eb('score', '+', 100) }))
+        .where('gameId', '=', gameId)
+        .where('playerId', '=', playerId)
+        .execute();
+    }
+    const nextQuestion = await db
+      .selectFrom('gamePlayerQuestion')
+      .select('questionId')
+      .where('gameId', '=', gameId)
+      .where('playerId', '=', playerId)
+      .executeTakeFirst();
+
+    return NextResponse.json<AnswerResponse>({
+      nextQuestion: nextQuestion?.questionId,
+      receivedAnswer: answer,
+      correctAnswer: correctAnswerId === answer,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json<ErrorResponse>(
+      { error: 'Internal server error' },
+      { status: 500, statusText: 'Internal server error' },
+    );
+  }
 }
