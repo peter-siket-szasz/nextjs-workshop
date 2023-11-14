@@ -5,20 +5,20 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import JoinGameButton from '../Buttons/JoinGameButton';
 import { useGameJoin } from '../../hooks/api/game/join';
-import { JoinGameResponse } from '@/app/api/game/join/route';
 import { useEffect, useState } from 'react';
+import LoadingSpinner from '../LoadingSpinner';
 
 export default function JoinGameForm() {
   const router = useRouter();
 
-  const { data: gameData, trigger } = useGameJoin();
+  const { data: gameData, trigger, isMutating } = useGameJoin();
 
   const { handleSubmit, register } = useForm();
 
   const [gameId, setGameId] = useState(null);
 
   useEffect(() => {
-    if (gameData as JoinGameResponse) {
+    if (gameData) {
       router.push(`/game/${gameId}/question/${gameData.nextQuestion}`);
     }
   }, [gameData]);
@@ -27,6 +27,10 @@ export default function JoinGameForm() {
     trigger({ gameId: data.gameId });
     setGameId(data.gameId);
   };
+
+  if (isMutating) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <form

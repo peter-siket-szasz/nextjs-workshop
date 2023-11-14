@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
@@ -9,6 +9,7 @@ import FancyHeading from '../FancyHeading';
 import { Question } from '@/types/Question';
 import { useQuestionId } from '../../hooks/api/game/question';
 import { useAnswer } from '@/app/hooks/api/game/answer';
+import LoadingSpinner from '../LoadingSpinner';
 
 type Props = {
   gameId: string;
@@ -18,7 +19,7 @@ type Props = {
 export function QuestionForm({ gameId, questionId }: Props) {
   const router = useRouter();
 
-  const { data: dataQuestion } = useQuestionId(questionId);
+  const { data: dataQuestion, isLoading, error } = useQuestionId(questionId);
   const { data: dataGameAnswer, trigger } = useAnswer();
 
   const [correctAnswerId, setCorrectAnswerId] = useState(null);
@@ -29,40 +30,52 @@ export function QuestionForm({ gameId, questionId }: Props) {
     setNextQuestionId(dataGameAnswer.nextQuestionId);
   }, [dataGameAnswer]); */
 
-  return (
-    <>
-      <Text as="i">Question No. {questionId}</Text>
-      <FancyHeading text={dataQuestion?.question} fontSize="70px" />
-      <Box margin="40px">
-        <SimpleGrid spacing={20} columns={2} justifyContent="center">
-          {mapQuestions(dataQuestion ?? []).map((option, idx) => {
-            return (
-              <QuizAnswerButton
-                key={idx}
-                text={option ?? ''}
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    <Text>An error occured.</Text>;
+  }
+
+  if (dataQuestion) {
+    {
+      return (
+        <>
+          <Text as="i">Question No. {questionId}</Text>
+          <FancyHeading text={dataQuestion?.question} fontSize="70px" />
+          <Box margin="40px">
+            <SimpleGrid spacing={20} columns={2} justifyContent="center">
+              {mapQuestions(dataQuestion ?? []).map((option, idx) => {
+                return (
+                  <QuizAnswerButton
+                    key={idx}
+                    text={option ?? ''}
+                    onClick={() =>
+                      trigger({
+                        gameId: Number(gameId),
+                        questionId: Number(questionId),
+                        answer: idx,
+                      })
+                    }
+                    state={getStateOfOption(correctAnswerId, idx)}
+                  />
+                );
+              })}
+            </SimpleGrid>
+            <Box paddingTop="100px" display="flex" justifyContent="flex-end">
+              <NextButton
                 onClick={() =>
-                  trigger({
-                    gameId: Number(gameId),
-                    questionId: Number(questionId),
-                    answer: idx,
-                  })
+                  router.push(`/game/${gameId}/question/${nextQuestionId}`)
                 }
-                state={getStateOfOption(correctAnswerId, idx)}
+                isDisabled={!correctAnswerId}
               />
-            );
-          })}
-        </SimpleGrid>
-        <Box paddingTop="100px" display="flex" justifyContent="flex-end">
-          <NextButton
-            onClick={() =>
-              router.push(`/game/${gameId}/question/${nextQuestionId}`)
-            }
-            isDisabled={!correctAnswerId}
-          />
-        </Box>
-      </Box>
-    </>
-  );
+            </Box>
+          </Box>
+        </>
+      );
+    }
+  }
 }
 
 function mapQuestions(data: Question) {

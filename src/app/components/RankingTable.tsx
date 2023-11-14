@@ -12,16 +12,17 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { useRanking } from '../hooks/api/game/ranking';
+import LoadingSpinner from './LoadingSpinner';
 
 type Props = {
   gameId: string;
 };
 
 export function RankingTable({ gameId }: Props) {
-  const { data } = useRanking(gameId);
+  const { data, isLoading } = useRanking(gameId);
 
-  if (!data) {
-    return <Spinner />;
+  if (!data || isLoading) {
+    return <LoadingSpinner />;
   } else {
     return (
       <TableContainer>

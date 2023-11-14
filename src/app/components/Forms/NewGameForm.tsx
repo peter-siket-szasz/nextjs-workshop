@@ -7,6 +7,7 @@ import { useNewGame } from '../../hooks/api/game/new';
 import { useEffect, useState } from 'react';
 import FancyHeading from '../FancyHeading';
 import CreateGameButton from '../Buttons/CreateGameButton';
+import LoadingSpinner from '../LoadingSpinner';
 
 export default function NewGameForm() {
   const { data, trigger, isMutating, error } = useNewGame();
@@ -20,7 +21,7 @@ export default function NewGameForm() {
   if (!createdGameId) {
     return <CreateGameButton onClick={() => trigger()} />;
   } else if (isMutating) {
-    return <Spinner />;
+    return <LoadingSpinner />;
   } else if (error) {
     return (
       <Box
