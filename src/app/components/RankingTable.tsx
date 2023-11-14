@@ -1,3 +1,5 @@
+'use client';
+
 import { Ranking } from '@/types/Ranking';
 import {
   Spinner,
