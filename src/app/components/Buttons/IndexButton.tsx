@@ -5,7 +5,7 @@ type Props = {
   height: string;
   label: string;
   onClick?: () => void;
-  textColor?: string;
+  textColor?: string | undefined;
   background?: string;
   isDisabled?: boolean;
   type?: 'submit' | undefined;
@@ -32,8 +32,8 @@ export default function IndexButton({
       background={background ?? 'white'}
       rounded="lg"
       _hover={{
-        background: background ?? '#FF0080',
         textColor: textColor ?? 'white',
+        background: background ?? '#FF0080',
         borderColor: 'white',
       }}
       onClick={onClick}

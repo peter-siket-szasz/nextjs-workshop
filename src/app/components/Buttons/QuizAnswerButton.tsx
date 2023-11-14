@@ -2,6 +2,7 @@
 
 import { Box } from '@chakra-ui/react';
 import IndexButton from './IndexButton';
+import { skip } from 'node:test';
 
 const CorrectAnswerStyling = {
   textColor: 'white',
@@ -10,7 +11,7 @@ const CorrectAnswerStyling = {
 
 const WrongAnswerStyling = {
   textColor: 'white',
-  background: 'puprle',
+  background: 'red',
 };
 
 export default function QuizAnswerButton({
@@ -22,22 +23,10 @@ export default function QuizAnswerButton({
   key: number;
   text: string;
   onClick: () => {};
-  state: boolean | null;
+  state: boolean | undefined;
 }) {
-  if (state == null) {
-    // if no option has been selected yet
-    return (
-      <Box key={key}>
-        <IndexButton
-          width="300px"
-          height="100px"
-          label={text}
-          onClick={onClick}
-        ></IndexButton>
-      </Box>
-    );
-  } else {
-    // give feedback to the user
+  if (state) {
+    // after selection give feedback to the user
     return (
       <Box key={key}>
         <IndexButton
@@ -55,6 +44,18 @@ export default function QuizAnswerButton({
               ? CorrectAnswerStyling.background
               : WrongAnswerStyling.background
           }
+        ></IndexButton>
+      </Box>
+    );
+  } else {
+    // if no option has been selected yet
+    return (
+      <Box key={key}>
+        <IndexButton
+          width="300px"
+          height="100px"
+          label={text}
+          onClick={onClick}
         ></IndexButton>
       </Box>
     );

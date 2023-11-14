@@ -1,8 +1,6 @@
 'use client';
 
-import { Ranking } from '@/types/Ranking';
 import {
-  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -35,7 +33,7 @@ export function RankingTable({ gameId }: Props) {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((currentElement: Ranking, index: number) => {
+            {data.map((currentElement: any, index: number) => {
               return (
                 <Tr key={index}>
                   <Td isNumeric>{index}</Td>

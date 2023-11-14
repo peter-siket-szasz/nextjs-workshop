@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
+import { Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
@@ -22,15 +22,31 @@ export function QuestionForm({ gameId, questionId }: Props) {
   const { data: dataQuestion, isLoading, error } = useQuestionId(questionId);
   const { data: dataGameAnswer, trigger } = useAnswer();
 
+  const [selectedAnswerId, setselectedAnswerId] = useState(null);
   const [correctAnswerId, setCorrectAnswerId] = useState(null);
   const [nextQuestionId, setNextQuestionId] = useState(null);
 
   useEffect(() => {
     if (dataGameAnswer) {
+      setselectedAnswerId(dataGameAnswer.receivedAnswer);
       setCorrectAnswerId(dataGameAnswer.correctAnswer);
       setNextQuestionId(dataGameAnswer.nextQuestion);
     }
-  }, [dataGameAnswer]);
+  });
+
+  function getStateOfOption(answerId: number): boolean | undefined {
+    if (correctAnswerId) {
+      if (correctAnswerId == answerId) {
+        return true;
+      } else if (selectedAnswerId == answerId) {
+        return false;
+      } else {
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  }
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -61,15 +77,18 @@ export function QuestionForm({ gameId, questionId }: Props) {
                         answer: answerId,
                       })
                     }
-                    state={getStateOfOption(correctAnswerId, answerId)}
+                    state={getStateOfOption(answerId)}
                   />
                 );
               })}
             </SimpleGrid>
             <Box paddingTop="100px" display="flex" justifyContent="flex-end">
               <NextButton
+                label={nextQuestionId ? 'Next' : 'Finish'}
                 onClick={() =>
-                  router.push(`/game/${gameId}/question/${nextQuestionId}`)
+                  nextQuestionId
+                    ? router.push(`/game/${gameId}/question/${nextQuestionId}`)
+                    : router.push(`/game/${gameId}/ranking`)
                 }
                 isDisabled={!correctAnswerId}
               />
@@ -83,15 +102,4 @@ export function QuestionForm({ gameId, questionId }: Props) {
 
 function mapQuestions(data: Question) {
   return [data.option1, data.option2, data.option3, data.option4];
-}
-
-function getStateOfOption(
-  correctAnswerId: number | null,
-  optionId: number
-): boolean | null {
-  if (correctAnswerId) {
-    return correctAnswerId == optionId ? true : false;
-  } else {
-    return null;
-  }
 }
