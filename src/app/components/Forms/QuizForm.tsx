@@ -25,10 +25,12 @@ export function QuestionForm({ gameId, questionId }: Props) {
   const [correctAnswerId, setCorrectAnswerId] = useState(null);
   const [nextQuestionId, setNextQuestionId] = useState(null);
 
-  /* useEffect(() => {
-    setCorrectAnswerId(dataGameAnswer.correctAnswerId);
-    setNextQuestionId(dataGameAnswer.nextQuestionId);
-  }, [dataGameAnswer]); */
+  useEffect(() => {
+    if (dataGameAnswer) {
+      setCorrectAnswerId(dataGameAnswer.correctAnswer);
+      setNextQuestionId(dataGameAnswer.nextQuestion);
+    }
+  }, [dataGameAnswer]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -47,18 +49,19 @@ export function QuestionForm({ gameId, questionId }: Props) {
           <Box margin="40px">
             <SimpleGrid spacing={20} columns={2} justifyContent="center">
               {mapQuestions(dataQuestion ?? []).map((option, idx) => {
+                const answerId = idx + 1;
                 return (
                   <QuizAnswerButton
-                    key={idx}
+                    key={answerId}
                     text={option ?? ''}
                     onClick={() =>
                       trigger({
                         gameId: Number(gameId),
                         questionId: Number(questionId),
-                        answer: idx,
+                        answer: answerId,
                       })
                     }
-                    state={getStateOfOption(correctAnswerId, idx)}
+                    state={getStateOfOption(correctAnswerId, answerId)}
                   />
                 );
               })}
