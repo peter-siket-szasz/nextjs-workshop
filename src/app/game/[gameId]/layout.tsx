@@ -1,3 +1,5 @@
+import { db } from '@/lib/db';
+
 export default async function GameLayout({
   children,
   params,
@@ -5,11 +7,10 @@ export default async function GameLayout({
   children: React.ReactNode;
   params: { gameId: string };
 }) {
-  const response = await fetch(`${process.env.BACKEND_BASE_URL}/games`, {
-    cache: 'no-store',
-  });
-  let ids: string[] = [];
-  //({ ids }  = await response.json());
-  console.log(ids);
+  try {
+    await db.selectFrom('games').where('id', '=', parseInt(params.gameId)).executeTakeFirstOrThrow();
+  } catch (error) {
+    return <div>404 Game not found</div>;
+  }
   return <>{children}</>;
 }
