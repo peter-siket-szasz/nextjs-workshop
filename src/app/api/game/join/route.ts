@@ -5,18 +5,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 interface JoinGameRequest {
   gameId: number;
+  token?: string;
 }
 
 interface JoinGameResponse {
-  nextQuestion: number;
+  nextQuestion: number | undefined;
   playerAdded: boolean;
 }
 
 export async function POST(request: NextRequest) {
-  let { gameId }: JoinGameRequest = await request.json();
+  let { gameId, token }: JoinGameRequest = await request.json();
 
   const cookieStore = cookies();
-  const token = cookieStore.get('playerId')?.value;
+  token ||= cookieStore.get('playerId')?.value;
 
   if (!token) {
     return NextResponse.json<ErrorResponse>(
@@ -39,6 +40,24 @@ export async function POST(request: NextRequest) {
       { error: 'Player not found' },
       { status: 404, statusText: 'Player not found' },
     );
+  }
+
+  // Check if player is already in game
+  const playerGameCheck = await db
+    .selectFrom('gamePlayer')
+    .selectAll()
+    .where('playerId', '=', player.id)
+    .where('gameId', '=', game.id)
+    .executeTakeFirst();
+  if (playerGameCheck) {
+    // Get the next question id
+    const res: { questionId: number } | undefined = await db
+      .selectFrom('gamePlayerQuestion')
+      .select('questionId')
+      .where('playerId', '=', player.id)
+      .where('gameId', '=', game.id)
+      .executeTakeFirst();
+    return NextResponse.json<JoinGameResponse>({ nextQuestion: res?.questionId, playerAdded: false });
   }
 
   const playerGame = await db
