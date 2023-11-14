@@ -1,13 +1,9 @@
-import useSWR from "swr";
+import useSWR from 'swr';
 
-export function useRanking(gameId : string) {
+export function useRanking(gameId: string) {
+  async function fetcher(url: string) {
+    return fetch(url).then((res) => res.json());
+  }
 
-    async function fetcher(url: string) {
-        return fetch(url).then((res) => res.json());
-      }
-      
-    return useSWR(
-        `/api/game/ranking/${gameId}`,
-        fetcher
-      );
+  return useSWR(`/api/game/ranking/${gameId}`, fetcher);
 }

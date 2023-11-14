@@ -1,13 +1,12 @@
-import useSWRMutation from "swr/mutation";
+import useSWRMutation from 'swr/mutation';
 
-export function useGameJoin () {
+export function useGameJoin() {
+  async function fetcher(url: string, { arg }: { arg: { gameId: number } }) {
+    return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(arg),
+    }).then((res) => res.json());
+  }
 
-    async function fetcher(url: string, { arg }: { arg: {gameId: number;} }) {
-        return fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(arg),
-        }).then((res) => res.json());
-      }
-      
-    return useSWRMutation('/api/game/join', fetcher);
+  return useSWRMutation('/api/game/join', fetcher);
 }

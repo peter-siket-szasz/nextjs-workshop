@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
+import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useRanking } from '../hooks/api/game/ranking';
 import LoadingSpinner from './LoadingSpinner';
 

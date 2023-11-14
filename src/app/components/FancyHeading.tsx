@@ -7,12 +7,7 @@ type Props = {
 
 export default function FancyHeading({ text, fontSize }: Props) {
   return (
-    <Text
-      as="b"
-      fontSize={fontSize}
-      bgClip="text"
-      bgGradient="linear(to-l, #7928CA, #FF0080)"
-    >
+    <Text as="b" fontSize={fontSize} bgClip="text" bgGradient="linear(to-l, #7928CA, #FF0080)">
       {text}
     </Text>
   );

@@ -6,11 +6,7 @@ type Props = {
 
 export default function Background(props: Props) {
   return (
-    <Box
-      w="100%"
-      h="100%"
-      bgGradient={['linear(to-tr, orange.100, purple.300)']}
-    >
+    <Box w="100%" h="100%" bgGradient={['linear(to-tr, orange.100, purple.300)']}>
       {props.children}
     </Box>
   );

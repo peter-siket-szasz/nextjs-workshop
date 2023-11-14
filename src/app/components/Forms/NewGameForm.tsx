@@ -24,13 +24,7 @@ export default function NewGameForm() {
     return <LoadingSpinner />;
   } else if (error) {
     return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        background="white"
-        padding="20px"
-        borderRadius="md"
-      >
+      <Box display="flex" flexDirection="column" background="white" padding="20px" borderRadius="md">
         <Text as="i" fontSize="xl">
           {error}
         </Text>
@@ -39,13 +33,7 @@ export default function NewGameForm() {
   } else {
     return (
       <>
-        <Box
-          display="flex"
-          flexDirection="column"
-          background="white"
-          padding="20px"
-          borderRadius="md"
-        >
+        <Box display="flex" flexDirection="column" background="white" padding="20px" borderRadius="md">
           <Text as="i" fontSize="xl">
             A new game with id
           </Text>

@@ -11,16 +11,7 @@ type Props = {
   type?: 'submit' | undefined;
 };
 
-export default function IndexButton({
-  width,
-  height,
-  label,
-  onClick,
-  textColor,
-  background,
-  isDisabled,
-  type,
-}: Props) {
+export default function IndexButton({ width, height, label, onClick, textColor, background, isDisabled, type }: Props) {
   return (
     <Button
       width={width}

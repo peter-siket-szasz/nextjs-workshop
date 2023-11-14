@@ -31,16 +31,8 @@ export default function QuizAnswerButton({
           height="100px"
           label={text}
           onClick={() => {}}
-          textColor={
-            state
-              ? CorrectAnswerStyling.textColor
-              : WrongAnswerStyling.textColor
-          }
-          background={
-            state
-              ? CorrectAnswerStyling.background
-              : WrongAnswerStyling.background
-          }
+          textColor={state ? CorrectAnswerStyling.textColor : WrongAnswerStyling.textColor}
+          background={state ? CorrectAnswerStyling.background : WrongAnswerStyling.background}
         ></IndexButton>
       </Box>
     );
@@ -48,12 +40,7 @@ export default function QuizAnswerButton({
     // if no option has been selected yet
     return (
       <Box key={key}>
-        <IndexButton
-          width="300px"
-          height="100px"
-          label={text}
-          onClick={onClick}
-        ></IndexButton>
+        <IndexButton width="300px" height="100px" label={text} onClick={onClick}></IndexButton>
       </Box>
     );
   }

@@ -1,15 +1,11 @@
-import useSWRMutation from "swr/mutation";
+import useSWRMutation from 'swr/mutation';
 
-export function useNewGame () {
+export function useNewGame() {
+  async function fetcher(url: string) {
+    return fetch(url, {
+      method: 'POST',
+    }).then((res) => res.json());
+  }
 
-    async function fetcher(url: string) {
-        return fetch(url, {
-          method: 'POST',
-        }).then((res) => res.json());
-    }
-      
-    return useSWRMutation(
-        '/api/game/new',
-        fetcher
-      );
+  return useSWRMutation('/api/game/new', fetcher);
 }

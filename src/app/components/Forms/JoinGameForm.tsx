@@ -51,15 +51,7 @@ export default function JoinGameForm() {
   );
 }
 
-const InputField = ({
-  id,
-  placeholder,
-  register,
-}: {
-  id: string;
-  placeholder: string;
-  register: any;
-}) => {
+const InputField = ({ id, placeholder, register }: { id: string; placeholder: string; register: any }) => {
   return (
     <Input
       width="220px"

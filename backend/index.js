@@ -45,10 +45,9 @@ fs.createReadStream('./data/questions.csv')
 
 const games = [];
 
-
 /** Helper function to find a game with given id */
 function findGame(gameId) {
-  return games.find(game => game.id === gameId);
+  return games.find((game) => game.id === gameId);
 }
 
 /** Generates a list of random questions and returns them as a list */
@@ -82,7 +81,7 @@ app.get('/questions', (req, res) => {
 /** API route to get a specific question */
 app.get('/question/:id', (req, res) => {
   const questionId = parseInt(req.params.id);
-  const question = questions.find(question => question.questionId === questionId);
+  const question = questions.find((question) => question.questionId === questionId);
   if (question) {
     const { correctOptionId, ...questionWithoutAnswer } = question;
     res.json(questionWithoutAnswer);
@@ -93,7 +92,7 @@ app.get('/question/:id', (req, res) => {
 
 /** API route to get all games */
 app.get('/games', (req, res) => {
-  res.json({ ids: games.map(game => game.id.toString()) });
+  res.json({ ids: games.map((game) => game.id.toString()) });
 });
 
 /** API route to get a game by id */
@@ -126,15 +125,18 @@ app.post('/game/new', (req, res) => {
   }
   const gameId = games.length + 1;
   games.push({ id: gameId, players: [] });
-  console.log(games.map(game => `id: ${game.id}, players: ${game.players.length}, [
-    ${game.players.map(player => `${player.questions.length}]`)
-}`));
+  console.log(
+    games.map(
+      (game) => `id: ${game.id}, players: ${game.players.length}, [
+    ${game.players.map((player) => `${player.questions.length}]`)}`,
+    ),
+  );
   res.json({ gameId: gameId, message: 'Game created with id: ' + gameId + '. Requested by player id: ' + playerId });
 });
 
 /** Endpoint for joining a game.
  * If player is not in the game, they get added. If the player is already in, they don't get added again.
- * Request body should be of the form: 
+ * Request body should be of the form:
  * {
  *  playerId: string,
  *  playerName: string,
@@ -158,10 +160,10 @@ app.post('/game/join', (req, res) => {
     res.status(404).json({ error: 'Game not found' });
     return;
   }
-  
+
   let player;
   let playerAdded = false;
-  player = game.players.find(player => player.playerId === playerId);
+  player = game.players.find((player) => player.playerId === playerId);
 
   if (!player) {
     let randomQuestions;
@@ -182,7 +184,6 @@ app.post('/game/join', (req, res) => {
 
   res.json({ nextQuestion, playerAdded });
 });
-
 
 /** API route to post answers 
   Request body should be of the form:
@@ -206,14 +207,14 @@ app.post('/game/answer', (req, res) => {
     res.status(400).json({ error: 'playerId is required' });
     return;
   }
-  if (!gameId, !questionId || !answer) {
+  if ((!gameId, !questionId || !answer)) {
     res.status(400).json({ error: 'gameId, questionId and answer are required' });
     return;
   }
 
   const game = findGame(gameId);
-  const player = game.players.find(player => player.playerId === playerId);
-  const question = questions.find(question => question.questionId === questionId);
+  const player = game.players.find((player) => player.playerId === playerId);
+  const question = questions.find((question) => question.questionId === questionId);
   const playerHasQuestion = player.questions.includes(questionId);
   // Update game if player answered own question
   if (playerHasQuestion) {
@@ -223,7 +224,7 @@ app.post('/game/answer', (req, res) => {
     }
   } else {
     console.log('question not in list');
-  };
+  }
   const nextQuestion = player.questions.length ? player.questions[0] : null;
   res.json({ nextQuestion, receivedAnswer: answer, correctAnswer: question.correctOptionId });
 });
@@ -238,7 +239,7 @@ app.get('/ranking/:gameId', (req, res) => {
   }
   const ranking = game.players
     .sort((a, b) => b.score - a.score)
-    .map(player => ({ playerId: player.playerId, score: player.score, playerName: player.playerName }));
+    .map((player) => ({ playerId: player.playerId, score: player.score, playerName: player.playerName }));
   res.json(ranking);
 });
 

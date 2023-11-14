@@ -5,12 +5,5 @@ type Props = {
 };
 
 export default function CreateGameButton({ onClick }: Props) {
-  return (
-    <IndexButton
-      width="100px"
-      height="50px"
-      label="New Quiz"
-      onClick={onClick}
-    />
-  );
+  return <IndexButton width="100px" height="50px" label="New Quiz" onClick={onClick} />;
 }
