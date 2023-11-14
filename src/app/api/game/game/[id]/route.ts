@@ -25,8 +25,8 @@ export async function GET(req: NextApiRequest, { params }: { params: { id: strin
       .executeTakeFirst();
     if (!game)
       return NextResponse.json<ErrorResponse>(
-        { error: 'Question not found' },
-        { status: 404, statusText: 'Question not found' },
+        { error: 'Game not found' },
+        { status: 404, statusText: 'Game not found' },
       );
     const players = await getPlayersWithScore(game.id);
     return NextResponse.json<Game>({ ...game, players: players });
