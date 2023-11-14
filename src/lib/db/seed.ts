@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { sql } from 'kysely';
 import { getQuestions } from '../getQuestions';
 
 export async function down() {
@@ -33,7 +34,7 @@ export async function up() {
     .createTable('games')
     .ifNotExists()
     .addColumn('id', 'serial', (cb) => cb.primaryKey())
-    .addColumn('createdAt', 'date', (cb) => cb.defaultTo(new Date().toLocaleString()).notNull())
+    .addColumn('createdAt', 'date', (cb) => cb.notNull().defaultTo(sql`now()`))
     .addColumn('createdBy', 'integer') //, (cb) => cb.references('players.id').notNull())
     .execute();
 

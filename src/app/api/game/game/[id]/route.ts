@@ -6,6 +6,16 @@ import { ErrorResponse } from '@/types/ErrorResponse';
 import { Game } from '@/types/Game';
 import { Player } from '@/types/Player';
 
+export async function getPlayersWithScore(gameId: number): Promise<Array<Player & { score: number }>> {
+  const players = await db
+    .selectFrom('gamePlayer')
+    .innerJoin('players', 'gamePlayer.playerId', 'players.id')
+    .select(['players.id', 'players.name', 'players.token', 'gamePlayer.score'])
+    .where('gameId', '=', gameId)
+    .execute();
+  return players;
+}
+
 export async function GET(req: NextApiRequest, { params }: { params: { id: string } }) {
   try {
     const game: Game | undefined = await db
@@ -18,17 +28,7 @@ export async function GET(req: NextApiRequest, { params }: { params: { id: strin
         { error: 'Question not found' },
         { status: 404, statusText: 'Question not found' },
       );
-    // Get player ids of game
-    const playerIds = (
-      await db.selectFrom('gamePlayer').select('playerId').where('gameId', '=', game.id).execute()
-    ).map((obj) => obj.playerId);
-    // Map player ids to players
-    const players: Player[] = await Promise.all(
-      playerIds.map(
-        async (playerId) => await db.selectFrom('players').selectAll().where('id', '=', playerId).executeTakeFirst(),
-      ),
-      // Filter out undefined players (TypeScript compliance)
-    ).then((res) => res.filter((player): player is Player => !!player));
+    const players = await getPlayersWithScore(game.id);
     return NextResponse.json<Game>({ ...game, players: players });
   } catch (error) {
     console.error(error);
