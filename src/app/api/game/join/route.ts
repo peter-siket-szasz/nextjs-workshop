@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 interface JoinGameRequest {
   gameId: number;
+  playerName: string;
   token?: string;
 }
 
@@ -14,7 +15,7 @@ interface JoinGameResponse {
 }
 
 export async function POST(request: NextRequest) {
-  let { gameId, token }: JoinGameRequest = await request.json();
+  let { gameId, token, playerName }: JoinGameRequest = await request.json();
 
   const cookieStore = cookies();
   token ||= cookieStore.get('playerId')?.value;
@@ -34,11 +35,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const player = await db.selectFrom('players').selectAll().where('token', '=', token).executeTakeFirst();
+  const player =
+    (await db.selectFrom('players').selectAll().where('token', '=', token).executeTakeFirst()) ||
+    (await db.insertInto('players').values({ name: playerName, token }).returningAll().executeTakeFirst());
+
   if (!player) {
     return NextResponse.json<ErrorResponse>(
-      { error: 'Player not found' },
-      { status: 404, statusText: 'Player not found' },
+      { error: 'Error while getting or inserting player' },
+      { status: 500, statusText: 'Internal server error' },
     );
   }
 
