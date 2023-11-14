@@ -3,51 +3,49 @@
 import { Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
 import { NextButton } from '../Buttons/NextButton';
 import FancyHeading from '../FancyHeading';
 import { Question } from '@/types/Question';
+import { useQuestionId } from '../../hooks/api/game/question';
+import { useAnswer } from '@/app/hooks/api/game/answer';
 
 type Props = {
   gameId: string;
-  questionId: any;
+  questionId: string;
 };
 
 export function QuestionForm({ gameId, questionId }: Props) {
   const router = useRouter();
+
+  const { data: dataQuestion } = useQuestionId(questionId);
+  const { data: dataGameAnswer, trigger } = useAnswer();
+
   const [correctAnswerId, setCorrectAnswerId] = useState(null);
   const [nextQuestionId, setNextQuestionId] = useState(null);
 
-  const { data: dataQuestion } = useSWR(`/api/game/question/${questionId}`);
-  const { data: dataGameAnswer, trigger } = useSWRMutation(
-    '/api/game/answer',
-    sendAnswer
-  );
-
-  useEffect(() => {
+  /* useEffect(() => {
     setCorrectAnswerId(dataGameAnswer.correctAnswerId);
     setNextQuestionId(dataGameAnswer.nextQuestionId);
-  }, [dataGameAnswer]);
+  }, [dataGameAnswer]); */
 
   return (
     <>
       <Text as="i">Question No. {questionId}</Text>
-      <FancyHeading text={dataQuestion.question.question} fontSize="70px" />
+      <FancyHeading text={dataQuestion?.question} fontSize="70px" />
       <Box margin="40px">
         <SimpleGrid spacing={20} columns={2} justifyContent="center">
-          {mapQuestions(dataQuestion).map((option, idx) => {
+          {mapQuestions(dataQuestion ?? []).map((option, idx) => {
             return (
               <QuizAnswerButton
                 key={idx}
                 text={option ?? ''}
                 onClick={() =>
                   trigger({
-                    gameId: gameId,
-                    questionId: questionId,
-                    optionId: idx,
-                  }).then
+                    gameId: Number(gameId),
+                    questionId: Number(questionId),
+                    answer: idx,
+                  })
                 }
                 state={getStateOfOption(correctAnswerId, idx)}
               />
@@ -65,16 +63,6 @@ export function QuestionForm({ gameId, questionId }: Props) {
       </Box>
     </>
   );
-}
-
-async function sendAnswer(
-  url: string,
-  { arg }: { arg: { gameId: string; questionId: number; optionId: number } }
-) {
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(arg),
-  }).then((res) => res.json());
 }
 
 function mapQuestions(data: Question) {

@@ -9,14 +9,14 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import useSWR from 'swr';
+import { useRanking } from '../hooks/api/game/ranking';
 
 type Props = {
   gameId: string;
 };
 
 export function RankingTable({ gameId }: Props) {
-  const { data } = useSWR(`/api/ranking/${gameId}`);
+  const { data } = useRanking(gameId);
 
   if (!data) {
     return <Spinner />;

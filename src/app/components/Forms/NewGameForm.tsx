@@ -1,17 +1,17 @@
 'use client';
 
-import { Box, Link, Text } from '@chakra-ui/react';
+import { Box, Link, Spinner, Text } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
-import useSWRMutation from 'swr/mutation';
+import { useNewGame } from '../../hooks/api/game/new';
 import { useEffect, useState } from 'react';
 import FancyHeading from '../FancyHeading';
 import CreateGameButton from '../Buttons/CreateGameButton';
 
-export default function CreateGameForm() {
-  const [createdGameId, setCreatedGameId] = useState(null);
+export default function NewGameForm() {
+  const { data, trigger, isMutating, error } = useNewGame();
 
-  const { data, trigger, error } = useSWRMutation('/api/game/new', createGame);
+  const [createdGameId, setCreatedGameId] = useState(null);
 
   useEffect(() => {
     setCreatedGameId(data?.id);
@@ -19,6 +19,8 @@ export default function CreateGameForm() {
 
   if (!createdGameId) {
     return <CreateGameButton onClick={() => trigger()} />;
+  } else if (isMutating) {
+    return <Spinner />;
   } else if (error) {
     return (
       <Box
@@ -62,10 +64,4 @@ export default function CreateGameForm() {
       </>
     );
   }
-}
-
-async function createGame(url: string) {
-  return fetch(url, {
-    method: 'POST',
-  }).then((res) => res.json());
 }

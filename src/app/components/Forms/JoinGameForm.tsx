@@ -4,23 +4,33 @@ import { FormControl, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import JoinGameButton from '../Buttons/JoinGameButton';
+import { useGameJoin } from '../../hooks/api/game/join';
+import { JoinGameResponse } from '@/app/api/game/join/route';
+import { useEffect, useState } from 'react';
 
 export default function JoinGameForm() {
   const router = useRouter();
 
+  const { data: gameData, trigger } = useGameJoin();
+
   const { handleSubmit, register } = useForm();
 
-  const id = 1;
-  const questionId = 27;
+  const [gameId, setGameId] = useState(null);
 
-  function onSubmit(data: any) {
-    handleSubmit((data) => console.log(data));
-    router.push(`/game/${id}/question/${questionId}`);
-  }
+  useEffect(() => {
+    if (gameData as JoinGameResponse) {
+      router.push(`/game/${gameId}/question/${gameData.nextQuestion}`);
+    }
+  }, [gameData]);
+
+  const onSubmit = async (data: any) => {
+    trigger({ gameId: data.gameId });
+    setGameId(data.gameId);
+  };
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       style={{
         alignItems: 'center',
         justifyContent: 'center',
@@ -29,7 +39,7 @@ export default function JoinGameForm() {
       }}
     >
       <FormControl>
-        <InputField id="game" placeholder="#gameId" register={register} />
+        <InputField id="gameId" placeholder="#gameId" register={register} />
         <InputField id="name" placeholder="#yourName" register={register} />
       </FormControl>
       <JoinGameButton />
