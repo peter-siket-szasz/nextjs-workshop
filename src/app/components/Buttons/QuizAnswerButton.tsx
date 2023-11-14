@@ -1,8 +1,5 @@
-'use client';
-
 import { Box } from '@chakra-ui/react';
 import IndexButton from './IndexButton';
-import { skip } from 'node:test';
 
 const CorrectAnswerStyling = {
   textColor: 'white',

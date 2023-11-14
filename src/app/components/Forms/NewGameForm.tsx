@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Link, Spinner, Text } from '@chakra-ui/react';
+import { Box, Link, Text } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 import { useNewGame } from '../../hooks/api/game/new';

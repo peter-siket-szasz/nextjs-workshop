@@ -1,5 +1,3 @@
-'use client';
-
 import IndexButton from './IndexButton';
 
 type Props = {
