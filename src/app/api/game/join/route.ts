@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     .values({ playerId: player.id, gameId: game.id })
     .returningAll()
     .executeTakeFirst();
-  console.log(JSON.stringify(playerGame));
+
   const questionIds = (await db.selectFrom('questions').select('id').execute()).map((q) => q.id);
   const randomQuestions = questionIds.sort(() => 0.5 - Math.random()).slice(0, 10);
 
