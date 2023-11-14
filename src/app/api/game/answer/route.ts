@@ -13,7 +13,7 @@ interface AnswerRequest {
 interface AnswerResponse {
   nextQuestion: number | undefined;
   receivedAnswer: number;
-  correctAnswer: boolean;
+  correctAnswer: number;
 }
 
 export async function POST(request: NextRequest) {
@@ -33,6 +33,13 @@ export async function POST(request: NextRequest) {
     const correctAnswerId = (
       await db.selectFrom('questions').select('correctOptionId').where('id', '=', questionId).executeTakeFirst()
     )?.correctOptionId;
+
+    if (!correctAnswerId) {
+      return NextResponse.json<ErrorResponse>(
+        { error: 'Question not found' },
+        { status: 404, statusText: 'Question not found' },
+      );
+    }
 
     const playerId = (await db.selectFrom('players').select('id').where('token', '=', token).executeTakeFirst())?.id;
     if (!playerId) {
@@ -69,7 +76,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json<AnswerResponse>({
       nextQuestion: nextQuestion?.questionId,
       receivedAnswer: answer,
-      correctAnswer: correctAnswerId === answer,
+      correctAnswer: correctAnswerId,
     });
   } catch (error) {
     console.error(error);
