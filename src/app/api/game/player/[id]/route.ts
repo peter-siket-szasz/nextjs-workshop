@@ -14,8 +14,8 @@ export async function GET(req: NextApiRequest, { params }: { params: { id: strin
       .executeTakeFirst();
     if (!player)
       return NextResponse.json<ErrorResponse>(
-        { error: 'Question not found' },
-        { status: 404, statusText: 'Question not found' },
+        { error: 'Player not found' },
+        { status: 404, statusText: 'Player not found' },
       );
 
     return NextResponse.json<Player>(player);

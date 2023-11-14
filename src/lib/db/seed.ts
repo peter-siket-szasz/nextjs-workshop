@@ -3,15 +3,15 @@ import { sql } from 'kysely';
 import { getQuestions } from '../getQuestions';
 
 export async function down() {
-  await db.schema.dropTable('player_game_question').ifExists().execute();
+  await db.schema.dropTable('player_game_question').cascade().ifExists().execute();
   console.log('Dropped "player_game_question" table');
-  await db.schema.dropTable('player_game').ifExists().execute();
+  await db.schema.dropTable('player_game').cascade().ifExists().execute();
   console.log('Dropped "player_game" table');
-  await db.schema.dropTable('questions').ifExists().execute();
+  await db.schema.dropTable('questions').cascade().ifExists().execute();
   console.log('Dropped "questions" table');
-  await db.schema.dropTable('players').ifExists().execute();
+  await db.schema.dropTable('players').cascade().ifExists().execute();
   console.log('Dropped "players" table');
-  await db.schema.dropTable('games').ifExists().execute();
+  await db.schema.dropTable('games').cascade().ifExists().execute();
   console.log('Dropped "games" table');
 }
 
