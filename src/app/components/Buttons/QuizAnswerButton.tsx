@@ -11,21 +11,17 @@ const WrongAnswerStyling = {
   background: 'red',
 };
 
-export default function QuizAnswerButton({
-  key,
-  text,
-  onClick,
-  state,
-}: {
-  key: number;
+interface Props {
   text: string;
   onClick: () => {};
   state: boolean | undefined;
-}) {
+}
+
+export default function QuizAnswerButton({ text, onClick, state }: Props) {
   if (state) {
     // after selection give feedback to the user
     return (
-      <Box key={key}>
+      <Box>
         <IndexButton
           width="300px"
           height="100px"
@@ -39,7 +35,7 @@ export default function QuizAnswerButton({
   } else {
     // if no option has been selected yet
     return (
-      <Box key={key}>
+      <Box>
         <IndexButton width="300px" height="100px" label={text} onClick={onClick}></IndexButton>
       </Box>
     );
