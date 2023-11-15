@@ -24,7 +24,7 @@ export default function IndexButton({ width, height, label, onClick, textColor, 
       rounded='lg'
       _hover={{
         textColor: textColor ?? 'white',
-        background: background ?? '#FF0080',
+        background: background ?? 'brand.lilac.500',
         borderColor: 'white',
       }}
       onClick={onClick}

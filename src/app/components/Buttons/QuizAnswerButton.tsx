@@ -8,7 +8,7 @@ const CorrectAnswerStyling = {
 
 const WrongAnswerStyling = {
   textColor: 'white',
-  background: 'red',
+  background: 'brand.coral.800',
 };
 
 interface Props {
