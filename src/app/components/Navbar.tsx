@@ -5,16 +5,16 @@ import netlightLogo from '../../../public/images/boid.png';
 
 export default function Navbar() {
   return (
-    <Box px={4} height='10vh'>
+    <Box px={4} mb={4}>
       <Flex h={16} alignItems='center' justifyContent='space-between'>
         <Box width='50px' alignItems='center'>
-          <Link as={NextLink} href='/' isExternal>
+          <Link as={NextLink} href='/'>
             <NextImage src={netlightLogo} alt='logo' />
           </Link>
         </Box>
         <Flex alignItems='center'>
           <Box>
-            <Link as={NextLink} href='/game/new' isExternal>
+            <Link as={NextLink} href='/game/new'>
               <Text as='i' color='#E2DFF4'>
                 Play an amazing game ...
               </Text>

@@ -5,7 +5,6 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 import { useNewGame } from '../../hooks/api/game/new';
 import { useEffect, useState } from 'react';
-import FancyHeading from '../FancyHeading';
 import CreateGameButton from '../Buttons/CreateGameButton';
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -37,14 +36,16 @@ export default function NewGameForm() {
           <Text as='i' fontSize='xl'>
             A new game with id
           </Text>
-          <FancyHeading text={createdGameId} fontSize='50px' />
+          <Text as='b' fontSize='5xl' color='brand.lilac.800'>
+            {createdGameId}
+          </Text>
           <Text as='i' fontSize='xl'>
             has been created.
           </Text>
         </Box>
         <Box paddingTop='50px'>
           <Text>Go back to the</Text>
-          <Link as={NextLink} href='/' color='#FF0080' isExternal>
+          <Link as={NextLink} href='/' color='brand.lilac.800'>
             home page
             <ExternalLinkIcon mx='2px' />
           </Link>

@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 type Props = {
   text: string;
@@ -7,8 +7,10 @@ type Props = {
 
 export default function FancyHeading({ text, fontSize }: Props) {
   return (
-    <Text as='b' fontSize={fontSize} bgClip='text' bgGradient='linear(to-l, brand.coral.800, brand.lilac.800)'>
-      {text}
-    </Text>
+    <Box textAlign='center'>
+      <Text as='b' fontSize={fontSize} bgClip='text' bgGradient='linear(to-l, brand.coral.800, brand.lilac.800)'>
+        {text}
+      </Text>
+    </Box>
   );
 }
