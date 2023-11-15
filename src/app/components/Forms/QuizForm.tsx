@@ -34,7 +34,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
     }
   });
 
-  function getStateOfOption(answerId: number): boolean | undefined {
+  function getOptionState(answerId: number): boolean | undefined {
     if (correctAnswerId) {
       if (correctAnswerId == answerId) {
         return true;
@@ -77,20 +77,21 @@ export function QuestionForm({ gameId, questionId }: Props) {
                         answer: answerId,
                       })
                     }
-                    state={getStateOfOption(answerId)}
+                    state={getOptionState(answerId)}
+                    isDisabled={!!selectedAnswerId}
                   />
                 );
               })}
             </SimpleGrid>
             <Box paddingTop='100px' display='flex' justifyContent='flex-end'>
               <NextButton
-                label={nextQuestionId ? 'Next' : 'Finish'}
+                label={selectedAnswerId && !nextQuestionId ? 'Finish' : 'Next'}
                 onClick={() =>
                   nextQuestionId
                     ? router.push(`/game/${gameId}/question/${nextQuestionId}`)
                     : router.push(`/game/${gameId}/ranking`)
                 }
-                isDisabled={!correctAnswerId}
+                isDisabled={!selectedAnswerId}
               />
             </Box>
           </Box>
