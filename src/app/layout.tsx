@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from './providers';
 import Background from './components/Background';
 import Navbar from './components/Navbar';
+import PageContentWrapper from './components/PageContentWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,8 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} `}>
         <Providers>
           <Background>
-            <Navbar />
-            {children}
+            <PageContentWrapper>
+              <Navbar />
+              {children}
+            </PageContentWrapper>
           </Background>
         </Providers>
       </body>
