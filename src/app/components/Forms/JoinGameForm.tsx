@@ -3,7 +3,7 @@
 import { Box, FormControl, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { joinGame } from '@/app/api/actions/join';
+import { joinGame } from '@/app/actions/join';
 import { experimental_useFormState as useFormState } from 'react-dom';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
 import IndexButton from '../Buttons/IndexButton';

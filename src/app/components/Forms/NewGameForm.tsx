@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 import LoadingSpinner from '../LoadingSpinner';
 import { experimental_useFormState as useFormState } from 'react-dom';
 import { experimental_useFormStatus as useFormStatus } from 'react-dom';
-import { create } from '@/app/api/actions/create';
+import { create } from '@/app/actions/create';
 import IndexButton from '../Buttons/IndexButton';
 
 export default function NewGameForm() {

@@ -6,7 +6,7 @@ import { NextButton } from '../Buttons/NextButton';
 import FancyHeading from '../FancyHeading';
 import { Question } from '@/types/Question';
 import { experimental_useFormState as useFormState } from 'react-dom';
-import { AnswerResponse, answer } from '@/app/api/actions/answer';
+import { AnswerResponse, answer } from '@/app/actions/answer';
 import { ErrorResponse } from '@/types/ErrorResponse';
 
 type Props = {
