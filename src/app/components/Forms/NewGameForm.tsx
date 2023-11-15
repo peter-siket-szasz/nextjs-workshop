@@ -24,8 +24,8 @@ export default function NewGameForm() {
     return <LoadingSpinner />;
   } else if (error) {
     return (
-      <Box display="flex" flexDirection="column" background="white" padding="20px" borderRadius="md">
-        <Text as="i" fontSize="xl">
+      <Box display='flex' flexDirection='column' background='white' padding='20px' borderRadius='md'>
+        <Text as='i' fontSize='xl'>
           {error}
         </Text>
       </Box>
@@ -33,20 +33,20 @@ export default function NewGameForm() {
   } else {
     return (
       <>
-        <Box display="flex" flexDirection="column" background="white" padding="20px" borderRadius="md">
-          <Text as="i" fontSize="xl">
+        <Box display='flex' flexDirection='column' background='white' padding='20px' borderRadius='md'>
+          <Text as='i' fontSize='xl'>
             A new game with id
           </Text>
-          <FancyHeading text={createdGameId} fontSize="50px" />
-          <Text as="i" fontSize="xl">
+          <FancyHeading text={createdGameId} fontSize='50px' />
+          <Text as='i' fontSize='xl'>
             has been created.
           </Text>
         </Box>
-        <Box paddingTop="50px">
+        <Box paddingTop='50px'>
           <Text>Go back to the</Text>
-          <Link as={NextLink} href="/" color="#FF0080" isExternal>
+          <Link as={NextLink} href='/' color='#FF0080' isExternal>
             home page
-            <ExternalLinkIcon mx="2px" />
+            <ExternalLinkIcon mx='2px' />
           </Link>
           <Text>to login into the game.</Text>
         </Box>

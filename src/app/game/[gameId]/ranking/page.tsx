@@ -12,8 +12,8 @@ type Props = {
 export default function RankingPage({ params }: Props) {
   return (
     <PageContentWrapper>
-      <Box marginBottom="10px">
-        <FancyHeading text="And the winner is ..." fontSize="80px" />
+      <Box marginBottom='10px'>
+        <FancyHeading text='And the winner is ...' fontSize='80px' />
       </Box>
       <RankingTable gameId={params.gameId} />
     </PageContentWrapper>

@@ -60,10 +60,10 @@ export function QuestionForm({ gameId, questionId }: Props) {
     {
       return (
         <>
-          <Text as="i">Question No. {questionId}</Text>
-          <FancyHeading text={dataQuestion?.question} fontSize="70px" />
-          <Box margin="40px">
-            <SimpleGrid spacing={20} columns={2} justifyContent="center">
+          <Text as='i'>Question No. {questionId}</Text>
+          <FancyHeading text={dataQuestion?.question} fontSize='70px' />
+          <Box margin='40px'>
+            <SimpleGrid spacing={20} columns={2} justifyContent='center'>
               {mapQuestions(dataQuestion ?? []).map((option, idx) => {
                 const answerId = idx + 1;
                 return (
@@ -82,7 +82,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
                 );
               })}
             </SimpleGrid>
-            <Box paddingTop="100px" display="flex" justifyContent="flex-end">
+            <Box paddingTop='100px' display='flex' justifyContent='flex-end'>
               <NextButton
                 label={nextQuestionId ? 'Next' : 'Finish'}
                 onClick={() =>

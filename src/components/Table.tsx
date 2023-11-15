@@ -5,11 +5,11 @@ export const Table = <Key extends string>(props: {
   rows: (Record<Key, ReactNode> & { id: string | number })[];
 }) => {
   return (
-    <table className="w-full bg-white border border-gray-300">
+    <table className='w-full bg-white border border-gray-300'>
       <thead>
         <tr>
           {props.columns.map(({ key, label }) => (
-            <th className="py-2 px-4 border-b" key={key}>
+            <th className='py-2 px-4 border-b' key={key}>
               {label}
             </th>
           ))}
@@ -19,7 +19,7 @@ export const Table = <Key extends string>(props: {
         {props.rows.map((row) => (
           <tr key={row.id}>
             {props.columns.map(({ key }) => (
-              <td className="py-2 px-4 border-b" key={key}>
+              <td className='py-2 px-4 border-b' key={key}>
                 {row[key]}
               </td>
             ))}

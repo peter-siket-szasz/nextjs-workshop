@@ -16,12 +16,12 @@ export function RankingTable({ gameId }: Props) {
   } else {
     return (
       <TableContainer>
-        <Table variant="simple">
+        <Table variant='simple'>
           <Thead>
             <Tr>
-              <Th textColor="#7928CA">Position</Th>
-              <Th textColor="#7928CA">Name</Th>
-              <Th textColor="#7928CA">Score</Th>
+              <Th textColor='#7928CA'>Position</Th>
+              <Th textColor='#7928CA'>Name</Th>
+              <Th textColor='#7928CA'>Score</Th>
             </Tr>
           </Thead>
           <Tbody>

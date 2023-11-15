@@ -5,7 +5,7 @@ import JoinGameForm from './components/Forms/JoinGameForm';
 export default function Home() {
   return (
     <PageContentWrapper>
-      <FancyHeading text="Let's play a game" fontSize="150px" />
+      <FancyHeading text="Let's play a game" fontSize='150px' />
       <JoinGameForm />
     </PageContentWrapper>
   );

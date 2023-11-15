@@ -16,12 +16,12 @@ export default function IndexButton({ width, height, label, onClick, textColor, 
     <Button
       width={width}
       height={height}
-      margin="10px"
-      borderWidth="3px"
+      margin='10px'
+      borderWidth='3px'
       textColor={textColor ?? 'black'}
-      borderColor="white"
+      borderColor='white'
       background={background ?? 'white'}
-      rounded="lg"
+      rounded='lg'
       _hover={{
         textColor: textColor ?? 'white',
         background: background ?? '#FF0080',

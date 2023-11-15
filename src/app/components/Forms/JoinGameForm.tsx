@@ -43,8 +43,8 @@ export default function JoinGameForm() {
       }}
     >
       <FormControl>
-        <InputField id="gameId" placeholder="#gameId" register={register} />
-        <InputField id="name" placeholder="#yourName" register={register} />
+        <InputField id='gameId' placeholder='#gameId' register={register} />
+        <InputField id='name' placeholder='#yourName' register={register} />
       </FormControl>
       <JoinGameButton />
     </form>
@@ -54,15 +54,15 @@ export default function JoinGameForm() {
 const InputField = ({ id, placeholder, register }: { id: string; placeholder: string; register: any }) => {
   return (
     <Input
-      width="220px"
-      height="50px"
-      margin="10px"
-      paddingRight="100px"
-      variant="filled"
-      borderRadius="md"
-      background="white"
-      textColor="#7928CA"
-      type="text"
+      width='220px'
+      height='50px'
+      margin='10px'
+      paddingRight='100px'
+      variant='filled'
+      borderRadius='md'
+      background='white'
+      textColor='#7928CA'
+      type='text'
       _focusVisible={{ borderColor: 'white' }}
       placeholder={placeholder}
       {...register(id)}

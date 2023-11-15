@@ -23,8 +23,8 @@ export default function QuizAnswerButton({ text, onClick, state }: Props) {
     return (
       <Box>
         <IndexButton
-          width="300px"
-          height="100px"
+          width='300px'
+          height='100px'
           label={text}
           onClick={() => {}}
           textColor={state ? CorrectAnswerStyling.textColor : WrongAnswerStyling.textColor}
@@ -36,7 +36,7 @@ export default function QuizAnswerButton({ text, onClick, state }: Props) {
     // if no option has been selected yet
     return (
       <Box>
-        <IndexButton width="300px" height="100px" label={text} onClick={onClick}></IndexButton>
+        <IndexButton width='300px' height='100px' label={text} onClick={onClick}></IndexButton>
       </Box>
     );
   }
