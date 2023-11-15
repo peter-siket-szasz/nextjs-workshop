@@ -25,11 +25,11 @@ export function RankingTable({ gameId }: Props) {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((currentElement: any, index: number) => {
+            {data.slice(0, 10).map((currentElement: any, index: number) => {
               return (
                 <Tr key={index}>
-                  <Td isNumeric>{index}</Td>
-                  <Td>{currentElement.playerName}</Td>
+                  <Td isNumeric>{index + 1}</Td>
+                  <Td>{currentElement.name}</Td>
                   <Td isNumeric>{currentElement.score}</Td>
                 </Tr>
               );
