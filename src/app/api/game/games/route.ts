@@ -13,6 +13,7 @@ export async function GET() {
       .select(({ fn, val, ref }) => [
         ref('games.id').as('gameId'),
         'games.createdAt',
+        'games.createdBy',
         ref('players.id').as('playerId'),
         'players.name',
         'players.token',
@@ -26,6 +27,7 @@ export async function GET() {
         acc.push({
           id: row.gameId,
           createdAt: row.createdAt,
+          createdBy: row.createdBy,
           players:
             row.playerId && row.name && row.token
               ? [{ id: row.playerId, name: row.name, token: row.token, score: row.score || 0 }]

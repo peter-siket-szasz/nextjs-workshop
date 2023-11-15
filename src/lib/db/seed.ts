@@ -3,9 +3,9 @@ import { sql } from 'kysely';
 import { getQuestions } from '../getQuestions';
 
 export async function down() {
-  await db.schema.dropTable('player_game_question').cascade().ifExists().execute();
+  await db.schema.dropTable('game_player_question').cascade().ifExists().execute();
   console.log('Dropped "player_game_question" table');
-  await db.schema.dropTable('player_game').cascade().ifExists().execute();
+  await db.schema.dropTable('game_player').cascade().ifExists().execute();
   console.log('Dropped "player_game" table');
   await db.schema.dropTable('questions').cascade().ifExists().execute();
   console.log('Dropped "questions" table');
