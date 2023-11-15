@@ -4,17 +4,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { ErrorResponse } from '@/types/ErrorResponse';
 import { Game } from '@/types/Game';
-import { Player } from '@/types/Player';
-
-export async function getPlayersWithScore(gameId: number): Promise<Array<Player & { score: number }>> {
-  const players = await db
-    .selectFrom('gamePlayer')
-    .innerJoin('players', 'gamePlayer.playerId', 'players.id')
-    .select(['players.id', 'players.name', 'players.token', 'gamePlayer.score'])
-    .where('gameId', '=', gameId)
-    .execute();
-  return players;
-}
+import { getRanking } from '@/app/actions/util';
 
 export async function GET(req: NextApiRequest, { params }: { params: { id: string } }) {
   try {
@@ -28,7 +18,7 @@ export async function GET(req: NextApiRequest, { params }: { params: { id: strin
         { error: 'Game not found' },
         { status: 404, statusText: 'Game not found' },
       );
-    const players = await getPlayersWithScore(game.id);
+    const players = await getRanking(game.id);
     return NextResponse.json<Game>({ ...game, players: players });
   } catch (error) {
     console.error(error);
