@@ -2,39 +2,31 @@
 
 import { FormControl, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import JoinGameButton from '../Buttons/JoinGameButton';
-import { useGameJoin } from '../../hooks/api/game/join';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { joinGame } from '@/app/api/actions/join';
+import { experimental_useFormState as useFormState } from 'react-dom';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import IndexButton from '../Buttons/IndexButton';
 import LoadingSpinner from '../LoadingSpinner';
 
 export default function JoinGameForm() {
   const router = useRouter();
 
-  const { data: gameData, trigger, isMutating } = useGameJoin();
-
-  const { handleSubmit, register } = useForm();
-
-  const [gameId, setGameId] = useState(null);
+  const [joinState, formAction] = useFormState(joinGame, undefined);
 
   useEffect(() => {
-    if (gameData) {
-      router.push(`/game/${gameId}/question/${gameData.nextQuestion}`);
+    if (joinState && !('error' in joinState)) {
+      if (joinState.nextQuestion) {
+        router.push(`/game/${joinState.gameId}/question/${joinState.nextQuestion}`);
+      } else {
+        router.push(`/game/${joinState.gameId}/ranking`);
+      }
     }
   });
 
-  const onSubmit = async (data: any) => {
-    trigger({ gameId: data.gameId });
-    setGameId(data.gameId);
-  };
-
-  if (isMutating) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      action={formAction}
       style={{
         alignItems: 'center',
         justifyContent: 'center',
@@ -42,18 +34,27 @@ export default function JoinGameForm() {
         flexDirection: 'column',
       }}
     >
+      <div>{joinState && 'error' in joinState}</div>
       <FormControl>
-        <InputField id='gameId' placeholder='#gameId' register={register} />
-        <InputField id='name' placeholder='#yourName' register={register} />
+        <InputField id='gameId' placeholder='#gameId' />
+        <InputField id='playerName' placeholder='#yourName' />
       </FormControl>
       <JoinGameButton />
     </form>
   );
 }
 
-const InputField = ({ id, placeholder, register }: { id: string; placeholder: string; register: any }) => {
+function JoinGameButton() {
+  const { pending } = useFormStatus();
+
+  return pending ? <LoadingSpinner /> : <IndexButton width='100px' height='50px' label='Join Quiz' type='submit' />;
+}
+
+function InputField({ id, placeholder }: { id: string; placeholder: string }) {
   return (
     <Input
+      id={id}
+      name={id}
       width='220px'
       height='50px'
       margin='10px'
@@ -65,8 +66,7 @@ const InputField = ({ id, placeholder, register }: { id: string; placeholder: st
       type='text'
       _focusVisible={{ borderColor: 'white' }}
       placeholder={placeholder}
-      {...register(id)}
       isRequired={true}
     />
   );
-};
+}
