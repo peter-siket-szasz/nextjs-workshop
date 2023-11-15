@@ -3,29 +3,26 @@
 import { Box, Link, Text } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
-import { useNewGame } from '../../hooks/api/game/new';
-import { useEffect, useState } from 'react';
-import CreateGameButton from '../Buttons/CreateGameButton';
 import LoadingSpinner from '../LoadingSpinner';
+import { experimental_useFormState as useFormState } from 'react-dom';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { create } from '@/app/api/actions/create';
+import IndexButton from '../Buttons/IndexButton';
 
 export default function NewGameForm() {
-  const { data, trigger, isMutating, error } = useNewGame();
+  const [createState, formAction] = useFormState(create, undefined);
 
-  const [createdGameId, setCreatedGameId] = useState(null);
-
-  useEffect(() => {
-    setCreatedGameId(data?.id);
-  }, [data]);
-
-  if (!createdGameId) {
-    return <CreateGameButton onClick={() => trigger()} />;
-  } else if (isMutating) {
-    return <LoadingSpinner />;
-  } else if (error) {
+  if (!createState) {
+    return (
+      <form action={formAction}>
+        <CreateGameButton />
+      </form>
+    );
+  } else if ('error' in createState) {
     return (
       <Box display='flex' flexDirection='column' background='white' padding='20px' borderRadius='md'>
         <Text as='i' fontSize='xl'>
-          {error}
+          {createState.error}
         </Text>
       </Box>
     );
@@ -37,7 +34,7 @@ export default function NewGameForm() {
             A new game with id
           </Text>
           <Text as='b' fontSize='5xl' color='brand.lilac.800'>
-            {createdGameId}
+            {createState.id}
           </Text>
           <Text as='i' fontSize='xl'>
             has been created.
@@ -54,4 +51,10 @@ export default function NewGameForm() {
       </>
     );
   }
+}
+
+function CreateGameButton() {
+  const { pending } = useFormStatus();
+
+  return pending ? <LoadingSpinner /> : <IndexButton width='100px' height='50px' label='New Quiz' type='submit' />;
 }
