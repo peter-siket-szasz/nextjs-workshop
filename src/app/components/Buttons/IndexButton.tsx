@@ -16,7 +16,6 @@ export default function IndexButton({ width, height, label, onClick, textColor, 
     <Button
       width={width}
       height={height}
-      margin='10px'
       borderWidth='3px'
       textColor={textColor ?? 'black'}
       borderColor='white'

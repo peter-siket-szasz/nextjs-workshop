@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} `}>
         <Providers>
           <Background>
-            <SimpleGrid height='100%' templateRows='max-content'>
+            <SimpleGrid h='100%' minH='100vh' templateRows='max-content'>
               <Navbar />
               <PageContentWrapper>{children}</PageContentWrapper>
             </SimpleGrid>
