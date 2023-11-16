@@ -1,12 +1,29 @@
 import { db } from '@/lib/db';
 import { ErrorResponse } from '@/types/ErrorResponse';
-import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST() {
+interface CreateRequest {
+  token?: string;
+}
+
+export async function POST(request: NextRequest) {
+  let { token }: CreateRequest = await request.json();
+
+  const cookieStore = cookies();
+  token ||= cookieStore.get('playerId')?.value;
+
+  if (!token) {
+    return NextResponse.json<ErrorResponse>(
+      { error: 'No player cookie found' },
+      { status: 400, statusText: 'Bad request' },
+    );
+  }
+
   try {
     const response = await db
       .insertInto('games')
-      .values({ createdBy: 123 })
+      .values({ createdBy: token })
       .returning(['id', 'createdAt', 'createdBy'])
       .executeTakeFirst();
     return NextResponse.json(response);
