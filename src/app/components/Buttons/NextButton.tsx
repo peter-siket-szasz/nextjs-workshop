@@ -4,17 +4,8 @@ import IndexButton from './IndexButton';
 
 type Props = {
   label: string;
-  isDisabled: boolean;
-  onClick: () => void;
+  isDisabled?: boolean;
 };
-export function NextButton({ label, isDisabled, onClick }: Props) {
-  return (
-    <IndexButton
-      width='100px'
-      height='50px'
-      label={label}
-      onClick={!isDisabled ? onClick : () => {}}
-      isDisabled={isDisabled}
-    />
-  );
+export function NextButton({ label, isDisabled }: Props) {
+  return <IndexButton width='100px' height='50px' label={label} isDisabled={isDisabled} />;
 }

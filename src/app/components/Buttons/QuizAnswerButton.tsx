@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import IndexButton from './IndexButton';
 
 const CorrectAnswerStyling = {
@@ -13,33 +12,22 @@ const WrongAnswerStyling = {
 
 interface Props {
   text: string;
-  onClick: () => {};
   state: boolean | undefined;
   isDisabled: boolean;
 }
 
-export default function QuizAnswerButton({ text, onClick, state, isDisabled }: Props) {
-  if (state !== undefined) {
-    // after selection give feedback to the user
-    return (
-      <Box>
-        <IndexButton
-          width='300px'
-          height='100px'
-          label={text}
-          onClick={() => {}}
-          textColor={state ? CorrectAnswerStyling.textColor : WrongAnswerStyling.textColor}
-          background={state ? CorrectAnswerStyling.background : WrongAnswerStyling.background}
-          isDisabled={isDisabled}
-        ></IndexButton>
-      </Box>
-    );
-  } else {
-    // if no option has been selected yet
-    return (
-      <Box>
-        <IndexButton width='300px' height='100px' label={text} onClick={onClick} isDisabled={isDisabled}></IndexButton>
-      </Box>
-    );
-  }
+export default function QuizAnswerButton({ text, state, isDisabled }: Props) {
+  // after selection give feedback to the user
+  return state === undefined ? (
+    <IndexButton width='300px' height='100px' label={text} isDisabled={isDisabled} type='submit'></IndexButton>
+  ) : (
+    <IndexButton
+      width='300px'
+      height='100px'
+      label={text}
+      textColor={state ? CorrectAnswerStyling.textColor : WrongAnswerStyling.textColor}
+      background={state ? CorrectAnswerStyling.background : WrongAnswerStyling.background}
+      isDisabled={true}
+    ></IndexButton>
+  );
 }

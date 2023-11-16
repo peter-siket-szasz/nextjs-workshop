@@ -1,106 +1,83 @@
 'use client';
 
-import { Box, SimpleGrid, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Box, LinkBox, LinkOverlay, SimpleGrid, Text } from '@chakra-ui/react';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
 import { NextButton } from '../Buttons/NextButton';
 import FancyHeading from '../FancyHeading';
 import { Question } from '@/types/Question';
-import { useQuestionId } from '../../hooks/api/game/question';
-import { useAnswer } from '@/app/hooks/api/game/answer';
-import LoadingSpinner from '../LoadingSpinner';
+import { experimental_useFormState as useFormState } from 'react-dom';
+import { AnswerResponse, answer } from '@/app/api/actions/answer';
+import { ErrorResponse } from '@/types/ErrorResponse';
 
 type Props = {
   gameId: string;
   questionId: string;
+  question: Question;
 };
 
-export function QuestionForm({ gameId, questionId }: Props) {
-  const router = useRouter();
+export function QuestionForm({ gameId, questionId, question }: Props) {
+  const [questionState, formAction] = useFormState(answer, undefined);
 
-  const { data: dataQuestion, isLoading, error } = useQuestionId(questionId);
-  const { data: dataGameAnswer, trigger } = useAnswer();
-
-  const [selectedAnswerId, setselectedAnswerId] = useState(null);
-  const [correctAnswerId, setCorrectAnswerId] = useState(null);
-  const [nextQuestionId, setNextQuestionId] = useState(null);
-
-  useEffect(() => {
-    if (dataGameAnswer) {
-      setselectedAnswerId(dataGameAnswer.receivedAnswer);
-      setCorrectAnswerId(dataGameAnswer.correctAnswer);
-      setNextQuestionId(dataGameAnswer.nextQuestion);
-    }
-  }, [dataGameAnswer]);
-
-  function getOptionState(answerId: number): boolean | undefined {
-    if (correctAnswerId) {
-      if (correctAnswerId == answerId) {
-        return true;
-      } else if (selectedAnswerId == answerId) {
-        return false;
-      } else {
-        return undefined;
-      }
-    } else {
+  function getOptionState(questionState: AnswerResponse | ErrorResponse | undefined, idx: number): boolean | undefined {
+    // No answer or error
+    if (!questionState || (questionState && 'error' in questionState)) {
       return undefined;
     }
-  }
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error) {
-    <Text>An error occured.</Text>;
-  }
-
-  if (dataQuestion) {
-    {
-      return (
-        <>
-          <Text as='i'>Question No. {questionId}</Text>
-          <FancyHeading text={dataQuestion?.question} fontSize='70px' />
-          <Box margin='40px'>
-            <SimpleGrid spacing={{ base: 5, lg: 20 }} columns={{ base: 1, lg: 2 }} justifyContent='center'>
-              {mapQuestions(dataQuestion ?? []).map((option, idx) => {
-                const answerId = idx + 1;
-                return (
-                  <QuizAnswerButton
-                    key={answerId}
-                    text={option ?? ''}
-                    onClick={() =>
-                      trigger({
-                        gameId: Number(gameId),
-                        questionId: Number(questionId),
-                        answer: answerId,
-                      })
-                    }
-                    state={getOptionState(answerId)}
-                    isDisabled={!!selectedAnswerId}
-                  />
-                );
-              })}
-            </SimpleGrid>
-            <Box mt={5} display='flex' justifyContent='flex-end'>
-              <NextButton
-                label={selectedAnswerId && !nextQuestionId ? 'Finish' : 'Next'}
-                onClick={() =>
-                  nextQuestionId
-                    ? router.push(`/game/${gameId}/question/${nextQuestionId}`)
-                    : router.push(`/game/${gameId}/ranking`)
-                }
-                isDisabled={!selectedAnswerId}
-              />
-            </Box>
-          </Box>
-        </>
-      );
+    // Selected answer
+    if (idx === questionState.receivedAnswer) {
+      return idx === questionState.correctAnswer;
+      // Not selected answer, return correct as true
+    } else {
+      return idx === questionState.correctAnswer ? true : undefined;
     }
   }
+
+  return (
+    <>
+      <Text as='i'>Question No. {questionId}</Text>
+      <FancyHeading text={question?.question} fontSize='70px' />
+      <Box margin='40px'>
+        {questionState && 'error' in questionState && (
+          <Box textAlign='center' color='red' fontSize='xl'>
+            {questionState.error}
+          </Box>
+        )}
+        <SimpleGrid spacing={20} columns={2} justifyContent='center'>
+          {questionToOptions(question).map((option, idx) => {
+            return (
+              <form key={idx} action={formAction}>
+                <input type='hidden' name='gameId' value={gameId} />
+                <input type='hidden' name='questionId' value={questionId} />
+                <input type='hidden' name='answer' value={idx + 1} />
+                <QuizAnswerButton
+                  text={option ?? ''}
+                  state={getOptionState(questionState, idx + 1)}
+                  isDisabled={!!questionState}
+                />
+              </form>
+            );
+          })}
+        </SimpleGrid>
+        <LinkBox paddingTop='100px' display='flex' justifyContent='flex-end'>
+          {questionState ? (
+            <LinkOverlay
+              href={
+                'nextQuestion' in questionState
+                  ? `/game/${gameId}/question/${questionState.nextQuestion}`
+                  : `/game/${gameId}/ranking`
+              }
+            >
+              <NextButton label={'nextQuestion' in questionState ? 'Next' : 'Finish'} />
+            </LinkOverlay>
+          ) : (
+            <NextButton label={'Next'} isDisabled={true} />
+          )}
+        </LinkBox>
+      </Box>
+    </>
+  );
 }
 
-function mapQuestions(data: Question) {
-  return [data.option1, data.option2, data.option3, data.option4];
+function questionToOptions(question: Question) {
+  return [question.option1, question.option2, question.option3, question.option4];
 }
