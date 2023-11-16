@@ -1,6 +1,6 @@
 'use client';
 
-import { FormControl, Input } from '@chakra-ui/react';
+import { Box, FormControl, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import JoinGameButton from '../Buttons/JoinGameButton';
@@ -46,7 +46,7 @@ export default function JoinGameForm() {
         <InputField id='gameId' placeholder='#gameId' register={register} />
         <InputField id='name' placeholder='#yourName' register={register} />
       </FormControl>
-      <JoinGameButton />
+      <JoinGameButton loading={!!joinState} />
     </form>
   );
 }
