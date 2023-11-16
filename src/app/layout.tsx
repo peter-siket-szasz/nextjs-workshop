@@ -5,6 +5,7 @@ import { Providers } from './providers';
 import Background from './components/Background';
 import Navbar from './components/Navbar';
 import PageContentWrapper from './components/PageContentWrapper';
+import { SimpleGrid } from '@chakra-ui/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,8 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} `}>
         <Providers>
           <Background>
-            <Navbar />
-            <PageContentWrapper>{children}</PageContentWrapper>
+            <SimpleGrid height='100%' templateRows='max-content'>
+              <Navbar />
+              <PageContentWrapper>{children}</PageContentWrapper>
+            </SimpleGrid>
           </Background>
         </Providers>
       </body>
