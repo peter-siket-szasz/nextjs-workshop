@@ -19,7 +19,7 @@ export default function JoinGameForm() {
 
   useEffect(() => {
     if (gameData && !gameData.error) {
-      gameData.nextquestion
+      gameData.nextQuestion
         ? router.push(`/game/${gameId}/question/${gameData.nextQuestion}`)
         : router.push(`/game/${gameId}/ranking`);
     }
