@@ -63,7 +63,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
           <Text as='i'>Question No. {questionId}</Text>
           <FancyHeading text={dataQuestion?.question} fontSize='70px' />
           <Box margin='40px'>
-            <SimpleGrid spacing={20} columns={2} justifyContent='center'>
+            <SimpleGrid spacing={{ base: 5, lg: 20 }} columns={{ base: 1, lg: 2 }} justifyContent='center'>
               {mapQuestions(dataQuestion ?? []).map((option, idx) => {
                 const answerId = idx + 1;
                 return (
@@ -83,7 +83,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
                 );
               })}
             </SimpleGrid>
-            <Box paddingTop='100px' display='flex' justifyContent='flex-end'>
+            <Box mt={5} display='flex' justifyContent='flex-end'>
               <NextButton
                 label={selectedAnswerId && !nextQuestionId ? 'Finish' : 'Next'}
                 onClick={() =>
