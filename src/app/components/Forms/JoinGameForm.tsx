@@ -1,6 +1,6 @@
 'use client';
 
-import { FormControl, Input } from '@chakra-ui/react';
+import { FormControl, Input, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import JoinGameButton from '../Buttons/JoinGameButton';
@@ -18,8 +18,10 @@ export default function JoinGameForm() {
   const [gameId, setGameId] = useState(null);
 
   useEffect(() => {
-    if (gameData) {
-      router.push(`/game/${gameId}/question/${gameData.nextQuestion}`);
+    if (gameData && !gameData.error) {
+      gameData.nextquestion
+        ? router.push(`/game/${gameId}/question/${gameData.nextQuestion}`)
+        : router.push(`/game/${gameId}/ranking`);
     }
   });
 
@@ -42,6 +44,11 @@ export default function JoinGameForm() {
         flexDirection: 'column',
       }}
     >
+      {gameData?.error && (
+        <Text as='b' color='brand.coral.800'>
+          {gameData.error}
+        </Text>
+      )}
       <FormControl>
         <InputField id='gameId' placeholder='#gameId' register={register} />
         <InputField id='name' placeholder='#yourName' register={register} />
