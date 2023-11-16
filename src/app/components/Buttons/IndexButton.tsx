@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Button } from '@chakra-ui/react';
 
 type Props = {
@@ -21,11 +22,15 @@ export default function IndexButton({ width, height, label, onClick, textColor, 
       borderColor='white'
       background={background ?? 'white'}
       rounded='lg'
-      _hover={{
-        textColor: textColor ?? 'white',
-        background: background ?? 'brand.lilac.500',
-        borderColor: 'white',
-      }}
+      _hover={
+        !isDisabled
+          ? {
+              textColor: textColor ?? 'white',
+              background: background ?? 'brand.lilac.500',
+              borderColor: 'white',
+            }
+          : {}
+      }
       onClick={onClick}
       isDisabled={isDisabled}
       type={type}
