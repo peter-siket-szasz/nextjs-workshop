@@ -42,7 +42,7 @@ export function QuestionForm({ gameId, questionId, question }: Props) {
             {questionState.error}
           </Box>
         )}
-        <SimpleGrid spacing={20} columns={2} justifyContent='center'>
+        <SimpleGrid spacing={{ base: 5, lg: 20 }} columns={{ base: 1, lg: 2 }} justifyContent='center'>
           {questionToOptions(question).map((option, idx) => {
             return (
               <form key={idx} action={formAction}>
@@ -58,7 +58,7 @@ export function QuestionForm({ gameId, questionId, question }: Props) {
             );
           })}
         </SimpleGrid>
-        <LinkBox paddingTop='100px' display='flex' justifyContent='flex-end'>
+        <LinkBox mt={5} display='flex' justifyContent='flex-end'>
           {questionState ? (
             <LinkOverlay
               href={
