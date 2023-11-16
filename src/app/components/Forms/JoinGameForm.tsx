@@ -1,6 +1,6 @@
 'use client';
 
-import { FormControl, Input } from '@chakra-ui/react';
+import { Box, FormControl, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { joinGame } from '@/app/api/actions/join';
@@ -34,20 +34,28 @@ export default function JoinGameForm() {
         flexDirection: 'column',
       }}
     >
-      <div>{joinState && 'error' in joinState}</div>
+      {joinState && 'error' in joinState && (
+        <Box as='b' color='brand.coral.800'>
+          {joinState.error}
+        </Box>
+      )}
       <FormControl>
         <InputField id='gameId' placeholder='#gameId' />
         <InputField id='playerName' placeholder='#yourName' />
       </FormControl>
-      <JoinGameButton />
+      <JoinGameButton loading={!!joinState} />
     </form>
   );
 }
 
-function JoinGameButton() {
+function JoinGameButton({ loading }: { loading: boolean }) {
   const { pending } = useFormStatus();
 
-  return pending ? <LoadingSpinner /> : <IndexButton width='100px' height='50px' label='Join Quiz' type='submit' />;
+  return pending || loading ? (
+    <LoadingSpinner />
+  ) : (
+    <IndexButton width='100px' height='50px' label='Join Quiz' type='submit' />
+  );
 }
 
 function InputField({ id, placeholder }: { id: string; placeholder: string }) {
