@@ -1,23 +1,101 @@
 questionId,question,option1,option2,option3,option4,correctOptionId
-1,What is 2 + 2?,3,4,5,6,2
-2,Which planet is closest to the Sun?,Earth,Venus,Mercury,Mars,3
-3,What is the capital of France?,London,Paris,Berlin,Rome,2
-4,What is the square root of 16?,2,3,4,5,3
-5,Who wrote 'To Kill a Mockingbird'?,Ernest Hemingway,Harper Lee,Mark Twain,John Steinbeck,2
-6,What is the chemical symbol for Hydrogen?,H,He,Hy,Hg,1
-7,What is the largest ocean?,Atlantic,Pacific,Indian,Arctic,2
-8,Who painted the Mona Lisa?,Vincent van Gogh,Leonardo da Vinci,Pablo Picasso,Michelangelo,2
-9,What is the tallest mountain?,K2,Everest,Kilimanjaro,Denali,2
-10,What is the distance from Earth to the Sun?,93 million miles,39 million miles,149.6 million kilometers,1.496 x 10^8 kilometers,1
-11,Who discovered penicillin?,Marie Curie,Alexander Fleming,Isaac Newton,Albert Einstein,2
-12,What is the speed of light?,299,792,458 m/s,3.00 x 10^8 m/s,186,282 miles per second,All of the above,4
-13,What is the largest planet in our solar system?,Earth,Jupiter,Mars,Venus,2
-14,Who is the author of '1984'?,George Orwell,John Steinbeck,Ernest Hemingway,Mark Twain,1
-15,What is the capital of Australia?,Sydney,Melbourne,Canberra,Perth,3
-16,What is the smallest continent?,Australia,Africa,Europe,Antarctica,1
-17,What is the longest river?,Nile,Amazon,Yangtze,Mississippi,2
-18,What is the hottest planet in our solar system?,Mercury,Venus,Earth,Mars,2
-19,Who invented the telephone?,Thomas Edison,Alexander Graham Bell,Nikola Tesla,Albert Einstein,2
-20,What is the capital of Canada?,Toronto,Vancouver,Ottawa,Montreal,3
-21,What is the square root of 81?,7,8,9,10,3
-22,Who wrote 'Pride and Prejudice'?,Jane Austen,Emily Bronte,Mark Twain,Ernest Hemingway,1
+1,What is the capital of France?,Paris,London,Berlin,Madrid,1
+2,In which year did World War I begin?,1912,1914,1916,1918,2
+3,What is the largest mammal on Earth?,Elephant,Blue Whale,Giraffe,Rhinoceros,2
+4,Which planet is known as the Red Planet?,Venus,Jupiter,Mars,Saturn,3
+5,What is the chemical symbol for gold?,Au,Hg,Ag,Cu,1
+6,Who wrote the play Romeo and Juliet?,Charles Dickens,William Shakespeare,Jane Austen,Mark Twain,2
+7,Which ocean is the largest?,Atlantic,Pacific,Indian,Arctic,2
+8,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
+9,How many continents are there on Earth?,5,6,7,8,4
+10,What is the square root of 64?,6,7,8,9,1
+11,Which element has the atomic number 1?,Oxygen,Hydrogen,Carbon,Nitrogen,2
+12,Who painted the Mona Lisa?,Leonardo da Vinci,Vincent van Gogh,Pablo Picasso,Claude Monet,1
+13,What is the capital of Japan?,Seoul,Beijing,Tokyo,Bangkok,3
+14,What is the largest ocean on Earth?,Atlantic,Pacific,Indian,Arctic,2
+15,What is the chemical symbol for silver?,Au,Hg,Ag,Cu,3
+16,Who wrote To Kill a Mockingbird?,Jane Austen,Harper Lee,George Orwell,J.K. Rowling,2
+17,What is the main ingredient in guacamole?,Tomato,Onion,Avocado,Pepper,3
+18,Which gas do plants absorb during photosynthesis?,Oxygen,Carbon dioxide,Nitrogen,Hydrogen,2
+19,What is the capital of Australia?,Sydney,Melbourne,Canberra,Brisbane,3
+20,What is the square root of 81?,6,7,8,9,4
+21,Which planet is known as the Blue Planet?,Mars,Jupiter,Earth,Saturn,3
+22,What is the chemical symbol for iron?,Fe,Ag,Au,Cu,1
+23,Who wrote 1984?,George Orwell,Aldous Huxley,Ray Bradbury,Ernest Hemingway,1
+24,Which country is known as the Land of the Rising Sun?,China,Korea,Japan,Thailand,3
+25,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
+26,How many continents are there on Earth?,5,6,7,8,4
+27,What is the square root of 100?,6,7,8,10,4
+28,Which element has the atomic number 79?,Gold,Silver,Iron,Copper,1
+29,Who painted Starry Night?,Vincent van Gogh,Pablo Picasso,Claude Monet,Leonardo da Vinci,1
+30,What is the capital of Canada?,Vancouver,Montreal,Ottawa,Toronto,3
+31,In which year did the Titanic sink?,1912,1914,1916,1918,1
+32,What is the largest desert in the world?,Sahara,Arabian,Karakum,Antarctica,4
+33,What is the chemical symbol for potassium?,Na,He,K,Ne,3
+34,Who wrote Pride and Prejudice?,Charles Dickens,Emily Brontë,Jane Austen,Charlotte Brontë,3
+35,Which ocean is the smallest?,Atlantic,Pacific,Indian,Arctic,4
+36,What is the main ingredient in hummus?,Tomato,Chickpea,Onion,Pepper,2
+37,Which gas do humans exhale during respiration?,Oxygen,Carbon dioxide,Nitrogen,Hydrogen,2
+38,What is the capital of Brazil?,Buenos Aires,Rio de Janeiro,Brasília,São Paulo,3
+39,What is the square root of 49?,6,7,8,9,2
+40,What is the chemical symbol for lead?,Fe,Pb,Ag,Cu,2
+41,Who wrote The Great Gatsby?,F. Scott Fitzgerald,Ernest Hemingway,John Steinbeck,Mark Twain,1
+42,What is the largest planet in our solar system?,Mercury,Venus,Earth,Jupiter,4
+43,What is the chemical symbol for sodium?,Na,He,K,Ne,1
+44,Who wrote The Catcher in the Rye?,J.D. Salinger,George Orwell,Aldous Huxley,Ray Bradbury,1
+45,What is the capital of South Africa?,Cape Town,Johannesburg,Durban,Pretoria,1
+46,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
+47,How many continents are there on Earth?,5,6,7,8,4
+48,What is the square root of 121?,9,10,11,12,1
+49,Which element has the atomic number 8?,Oxygen,Hydrogen,Carbon,Nitrogen,1
+50,Who painted the Sistine Chapel ceiling?,Leonardo da Vinci,Michelangelo,Raphael,Botticelli,2
+51,What is the capital of China?,Beijing,Shanghai,Tokyo,Seoul,1
+52,What is the smallest prime number?,1,2,3,5,3
+53,What is the chemical symbol for mercury?,Hg,Fe,Ag,Cu,1
+54,Who wrote The Odyssey?,Homer,Virgil,Plato,Sophocles,1
+55,Which country is known as the Land of the Midnight Sun?,Norway,Sweden,Finland,Iceland,1
+56,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
+57,How many continents are there on Earth?,5,6,7,8,4
+58,What is the square root of 144?,10,11,12,13,4
+59,Which element has the atomic number 47?,Silver,Gold,Iron,Copper,1
+60,Who painted Guernica?,Pablo Picasso,Vincent van Gogh,Claude Monet,Leonardo da Vinci,1
+61,What is the capital of Russia?,Berlin,London,Paris,Moscow,4
+62,In which year did the United States declare independence?,1772,1776,1780,1784,2
+63,What is the largest island in the world?,Greenland,Australia,New Guinea,Borneo,1
+64,What is the chemical symbol for chlorine?,Cl,Hg,Ag,Cu,1
+65,Who wrote The Hobbit?,J.R.R. Tolkien,C.S. Lewis,J.K. Rowling,George R.R. Martin,1
+66,Which ocean is the saltiest?,Atlantic,Pacific,Indian,Arctic,1
+67,What is the main ingredient in pesto sauce?,Tomato,Basil,Onion,Pepper,2
+68,Which gas do plants release during photosynthesis?,Oxygen,Carbon dioxide,Nitrogen,Hydrogen,1
+69,What is the capital of Argentina?,Bogotá,Mexico City,Buenos Aires,Santiago,3
+70,What is the square root of 169?,11,12,13,14,3
+71,What is the chemical symbol for zinc?,Fe,Zn,Ag,Cu,2
+72,Who wrote War and Peace?,Leo Tolstoy,Fyodor Dostoevsky,Anton Chekhov,Aleksandr Solzhenitsyn,1
+73,What is the smallest planet in our solar system?,Mercury,Venus,Earth,Mars,1
+74,What is the chemical symbol for neon?,Na,Ne,K,He,4
+75,What is the capital of Mexico?,Buenos Aires,Mexico City,Lima,Bogotá,2
+76,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
+77,How many continents are there on Earth?,5,6,7,8,4
+78,What is the square root of 196?,12,13,14,15,4
+79,Which element has the atomic number 56?,Iron,Gold,Barium,Copper,3
+80,Who painted American Gothic?,Grant Wood,Edward Hopper,Georgia O'Keeffe,Andrew Wyeth,1
+81,What is the capital of Spain?,Lisbon,Barcelona,Madrid,Seville,3
+82,In which year did the Berlin Wall fall?,1985,1989,1991,1995,2
+83,What is the largest lake in Africa?,Lake Victoria,Lake Tanganyika,Lake Malawi,Lake Chad,1
+84,What is the chemical symbol for potassium?,Na,He,K,Ne,3
+85,Who wrote The Iliad?,Homer,Virgil,Plato,Sophocles,1
+86,Which country is known as the Land of Fire and Ice?,Norway,Sweden,Iceland,Finland,3
+87,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
+88,How many continents are there on Earth?,5,6,7,8,4
+89,What is the square root of 225?,14,15,16,17,3
+90,Which element has the atomic number 29?,Silver,Gold,Iron,Copper,4
+91,Who painted The Persistence of Memory?,Salvador Dalí,Pablo Picasso,Vincent van Gogh,Leonardo da Vinci,1
+92,What is the capital of South Korea?,Beijing,Shanghai,Tokyo,Seoul,4
+93,What is the largest planet in our solar system?,Mercury,Venus,Earth,Jupiter,4
+94,What is the chemical symbol for sulfur?,S,He,K,Ne,1
+95,Who wrote The Canterbury Tales?,Geoffrey Chaucer,William Shakespeare,John Milton,John Donne,1
+96,What is the main ingredient in gazpacho?,Tomato,Cucumber,Onion,Pepper,1
+97,Which gas do animals inhale during respiration?,Oxygen,Carbon dioxide,Nitrogen,Hydrogen,1
+98,What is the capital of France?,Paris,London,Berlin,Madrid,1
+99,What is the square root of 256?,16,17,18,19,4
+100,Which element has the atomic number 17?,Oxygen,Hydrogen,Chlorine,Nitrogen,3
