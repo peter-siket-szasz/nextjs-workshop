@@ -21,7 +21,7 @@ export default function JoinGameForm() {
     if (gameData) {
       router.push(`/game/${gameId}/question/${gameData.nextQuestion}`);
     }
-  }, [gameData]);
+  });
 
   const onSubmit = async (data: any) => {
     trigger({ gameId: data.gameId });

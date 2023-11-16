@@ -32,7 +32,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
       setCorrectAnswerId(dataGameAnswer.correctAnswer);
       setNextQuestionId(dataGameAnswer.nextQuestion);
     }
-  });
+  }, [dataGameAnswer]);
 
   function getOptionState(answerId: number): boolean | undefined {
     if (correctAnswerId) {
