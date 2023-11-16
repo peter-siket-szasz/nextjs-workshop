@@ -27,7 +27,7 @@ export default function IndexButton({ width, height, label, onClick, textColor, 
         borderColor: 'white',
       }}
       onClick={onClick}
-      isDisabled={isDisabled ?? false}
+      isDisabled={isDisabled}
       type={type}
     >
       {label}
