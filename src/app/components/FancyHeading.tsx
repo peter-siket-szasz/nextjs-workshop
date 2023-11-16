@@ -2,7 +2,7 @@ import { Box, Text } from '@chakra-ui/react';
 
 type Props = {
   text: string;
-  fontSize: string;
+  fontSize: string | { [key: string]: string };
 };
 
 export default function FancyHeading({ text, fontSize }: Props) {
