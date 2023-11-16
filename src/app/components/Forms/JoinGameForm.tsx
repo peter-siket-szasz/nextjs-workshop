@@ -43,7 +43,7 @@ export default function JoinGameForm() {
         <InputField id='gameId' placeholder='#gameId' />
         <InputField id='playerName' placeholder='#yourName' />
       </FormControl>
-      <JoinGameButton loading={!!joinState} />
+      <JoinGameButton loading={!!joinState && !('error' in joinState)} />
     </form>
   );
 }
