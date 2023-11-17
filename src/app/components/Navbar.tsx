@@ -15,7 +15,7 @@ export default function Navbar() {
         <Flex alignItems='center'>
           <Box>
             <Link as={NextLink} href='/game/new'>
-              <Text as='i' color='#E2DFF4'>
+              <Text as='i' color='brand.gray.200'>
                 Play an amazing game ...
               </Text>
             </Link>
