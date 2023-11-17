@@ -13,10 +13,10 @@ export async function RankingTable({ gameId }: Props) {
     <TableContainer>
       <Table variant='simple'>
         <Thead>
-          <Tr>
-            <Th textColor='#7928CA'>Position</Th>
-            <Th textColor='#7928CA'>Name</Th>
-            <Th textColor='#7928CA'>Score</Th>
+          <Tr textColor='brand.lilac.800'>
+            <Th textColor='inherit'>Position</Th>
+            <Th textColor='inherit'>Name</Th>
+            <Th textColor='inherit'>Score</Th>
           </Tr>
         </Thead>
         <Tbody>

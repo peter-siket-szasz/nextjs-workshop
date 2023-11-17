@@ -70,7 +70,7 @@ function InputField({ id, placeholder }: { id: string; placeholder: string }) {
       variant='filled'
       borderRadius='md'
       background='white'
-      textColor='#7928CA'
+      textColor='brand.lilac.800'
       type='text'
       _focusVisible={{ borderColor: 'white' }}
       placeholder={placeholder}
