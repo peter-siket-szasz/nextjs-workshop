@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, LinkBox, LinkOverlay, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, SimpleGrid, Text, Link } from '@chakra-ui/react';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
 import { NextButton } from '../Buttons/NextButton';
 import FancyHeading from '../FancyHeading';
@@ -8,6 +8,7 @@ import { Question } from '@/types/Question';
 import { experimental_useFormState as useFormState } from 'react-dom';
 import { AnswerResponse, answer } from '@/app/actions/answer';
 import { ErrorResponse } from '@/types/ErrorResponse';
+import NextLink from 'next/link';
 
 type Props = {
   gameId: string;
@@ -58,9 +59,10 @@ export function QuestionForm({ gameId, questionId, question }: Props) {
             );
           })}
         </SimpleGrid>
-        <LinkBox mt={5} display='flex' justifyContent='flex-end'>
+        <Box mt={5} display='flex' justifyContent='flex-end'>
           {questionState ? (
-            <LinkOverlay
+            <Link
+              as={NextLink}
               href={
                 'nextQuestion' in questionState
                   ? `/game/${gameId}/question/${questionState.nextQuestion}`
@@ -68,11 +70,11 @@ export function QuestionForm({ gameId, questionId, question }: Props) {
               }
             >
               <NextButton label={'nextQuestion' in questionState ? 'Next' : 'Finish'} />
-            </LinkOverlay>
+            </Link>
           ) : (
             <NextButton label={'Next'} isDisabled={true} />
           )}
-        </LinkBox>
+        </Box>
       </Box>
     </>
   );
