@@ -14,7 +14,7 @@ export default function RankingPage({ params }: Props) {
       <Box marginBottom='10px'>
         <FancyHeading text='And the winner is ...' fontSize='80px' />
       </Box>
-      <RankingTable gameId={parseInt(params.gameId)} />
+      <RankingTable gameId={params.gameId} />
     </>
   );
 }
