@@ -8,7 +8,7 @@ questionId,question,option1,option2,option3,option4,correctOptionId
 7,Which ocean is the largest?,Atlantic,Pacific,Indian,Arctic,2
 8,What is the powerhouse of the cell?,Nucleus,Mitochondria,Ribosome,Lysosome,2
 9,How many continents are there on Earth?,5,6,7,8,3
-10,What is the square root of 64?,6,7,8,9,1
+10,What is the square root of 64?,6,7,8,9,8
 11,Which element has the atomic number 1?,Oxygen,Hydrogen,Carbon,Nitrogen,2
 12,Who painted the Mona Lisa?,Leonardo da Vinci,Vincent van Gogh,Pablo Picasso,Claude Monet,1
 13,What is the capital of Japan?,Seoul,Beijing,Tokyo,Bangkok,3
@@ -41,7 +41,7 @@ questionId,question,option1,option2,option3,option4,correctOptionId
 43,What is the chemical symbol for sodium?,Na,He,K,Ne,1
 44,Who wrote The Catcher in the Rye?,J.D. Salinger,George Orwell,Aldous Huxley,Ray Bradbury,1
 45,What is the capital of South Africa?,Cape Town,Johannesburg,Durban,Pretoria,1
-48,What is the square root of 121?,9,10,11,12,1
+48,What is the square root of 121?,9,10,11,12,3
 49,Which element has the atomic number 8?,Oxygen,Hydrogen,Carbon,Nitrogen,1
 50,Who painted the Sistine Chapel ceiling?,Leonardo da Vinci,Michelangelo,Raphael,Botticelli,2
 51,What is the capital of China?,Beijing,Shanghai,Tokyo,Seoul,1
@@ -49,7 +49,7 @@ questionId,question,option1,option2,option3,option4,correctOptionId
 53,What is the chemical symbol for mercury?,Hg,Fe,Ag,Cu,1
 54,Who wrote The Odyssey?,Homer,Virgil,Plato,Sophocles,1
 55,Which country is known as the Land of the Midnight Sun?,Norway,Sweden,Finland,Iceland,1
-58,What is the square root of 144?,10,11,12,13,4
+58,What is the square root of 144?,10,11,12,13,3
 59,Which element has the atomic number 47?,Silver,Gold,Iron,Copper,1
 60,Who painted Guernica?,Pablo Picasso,Vincent van Gogh,Claude Monet,Leonardo da Vinci,1
 61,What is the capital of Russia?,Berlin,London,Paris,Moscow,4
@@ -67,7 +67,7 @@ questionId,question,option1,option2,option3,option4,correctOptionId
 73,What is the smallest planet in our solar system?,Mercury,Venus,Earth,Mars,1
 74,What is the chemical symbol for neon?,Na,Ne,K,He,4
 75,What is the capital of Mexico?,Buenos Aires,Mexico City,Lima,Bogotá,2
-78,What is the square root of 196?,12,13,14,15,4
+78,What is the square root of 196?,12,13,14,15,3
 79,Which element has the atomic number 56?,Iron,Gold,Barium,Copper,3
 80,Who painted American Gothic?,Grant Wood,Edward Hopper,Georgia O'Keeffe,Andrew Wyeth,1
 81,What is the capital of Spain?,Lisbon,Barcelona,Madrid,Seville,3
@@ -75,7 +75,7 @@ questionId,question,option1,option2,option3,option4,correctOptionId
 83,What is the largest lake in Africa?,Lake Victoria,Lake Tanganyika,Lake Malawi,Lake Chad,1
 85,Who wrote The Iliad?,Homer,Virgil,Plato,Sophocles,1
 86,Which country is known as the Land of Fire and Ice?,Norway,Sweden,Iceland,Finland,3
-89,What is the square root of 225?,14,15,16,17,3
+89,What is the square root of 225?,14,15,16,17,2
 90,Which element has the atomic number 29?,Silver,Gold,Iron,Copper,4
 91,Who painted The Persistence of Memory?,Salvador Dalí,Pablo Picasso,Vincent van Gogh,Leonardo da Vinci,1
 92,What is the capital of South Korea?,Beijing,Shanghai,Tokyo,Seoul,4
@@ -84,5 +84,5 @@ questionId,question,option1,option2,option3,option4,correctOptionId
 96,What is the main ingredient in gazpacho?,Tomato,Cucumber,Onion,Pepper,1
 97,Which gas do animals inhale during respiration?,Oxygen,Carbon dioxide,Nitrogen,Hydrogen,1
 98,What is the capital of France?,Paris,London,Berlin,Madrid,1
-99,What is the square root of 256?,16,17,18,19,4
+99,What is the square root of 256?,16,17,18,19,1
 100,Which element has the atomic number 17?,Oxygen,Hydrogen,Chlorine,Nitrogen,3
