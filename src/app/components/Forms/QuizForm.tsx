@@ -4,12 +4,12 @@ import { Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
-import { NextButton } from '../Buttons/NextButton';
 import FancyHeading from '../FancyHeading';
 import { Question } from '@/types/Question';
 import { useQuestionId } from '../../hooks/api/game/question';
 import { useAnswer } from '@/app/hooks/api/game/answer';
 import LoadingSpinner from '../LoadingSpinner';
+import { NextButton } from '../Buttons/NextButton';
 
 type Props = {
   gameId: string;
@@ -85,13 +85,9 @@ export function QuestionForm({ gameId, questionId }: Props) {
             </SimpleGrid>
             <Box mt={5} display='flex' justifyContent='flex-end'>
               <NextButton
-                label={selectedAnswerId && !nextQuestionId ? 'Finish' : 'Next'}
-                onClick={() =>
-                  nextQuestionId
-                    ? router.push(`/game/${gameId}/question/${nextQuestionId}`)
-                    : router.push(`/game/${gameId}/ranking`)
-                }
+                href={nextQuestionId ? `/game/${gameId}/question/${nextQuestionId}` : `/game/${gameId}/ranking`}
                 isDisabled={!selectedAnswerId}
+                label={selectedAnswerId && !nextQuestionId ? 'Finish' : 'Next'}
               />
             </Box>
           </Box>
