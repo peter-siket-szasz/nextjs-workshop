@@ -33,6 +33,7 @@ export default function IndexButton({ width, height, label, onClick, textColor, 
       }
       onClick={onClick}
       isDisabled={isDisabled}
+      _disabled={{ pointerEvents: 'none', opacity: 0.4 }}
       type={type}
     >
       {label}
