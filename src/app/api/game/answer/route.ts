@@ -3,14 +3,14 @@ import { cookies } from 'next/headers';
 import { ErrorResponse } from '@/types/ErrorResponse';
 import { db } from '@/lib/db';
 
-interface AnswerRequest {
+export interface AnswerRequest {
   gameId: number;
   questionId: number;
   answer: number;
   token?: string;
 }
 
-interface AnswerResponse {
+export interface AnswerResponse {
   nextQuestion: number | undefined;
   receivedAnswer: number;
   correctAnswer: number;

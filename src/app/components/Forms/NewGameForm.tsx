@@ -11,7 +11,7 @@ import LoadingSpinner from '../LoadingSpinner';
 export default function NewGameForm() {
   const { data, trigger, isMutating, error } = useNewGame();
 
-  const [createdGameId, setCreatedGameId] = useState(null);
+  const [createdGameId, setCreatedGameId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     setCreatedGameId(data?.id);

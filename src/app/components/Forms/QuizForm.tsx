@@ -22,12 +22,12 @@ export function QuestionForm({ gameId, questionId }: Props) {
   const { data: dataQuestion, isLoading, error } = useQuestionId(questionId);
   const { data: dataGameAnswer, trigger } = useAnswer();
 
-  const [selectedAnswerId, setselectedAnswerId] = useState(null);
-  const [correctAnswerId, setCorrectAnswerId] = useState(null);
-  const [nextQuestionId, setNextQuestionId] = useState(null);
+  const [selectedAnswerId, setselectedAnswerId] = useState<number | undefined>(undefined);
+  const [correctAnswerId, setCorrectAnswerId] = useState<number | undefined>(undefined);
+  const [nextQuestionId, setNextQuestionId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (dataGameAnswer) {
+    if (dataGameAnswer && !('error' in dataGameAnswer)) {
       setselectedAnswerId(dataGameAnswer.receivedAnswer);
       setCorrectAnswerId(dataGameAnswer.correctAnswer);
       setNextQuestionId(dataGameAnswer.nextQuestion);

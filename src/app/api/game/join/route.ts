@@ -3,13 +3,13 @@ import { ErrorResponse } from '@/types/ErrorResponse';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-interface JoinGameRequest {
+export interface JoinGameRequest {
   gameId: number;
   playerName: string;
   token?: string;
 }
 
-interface JoinGameResponse {
+export interface JoinGameResponse {
   nextQuestion: number | undefined;
   playerAdded: boolean;
 }

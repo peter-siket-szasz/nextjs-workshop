@@ -3,8 +3,14 @@ import { ErrorResponse } from '@/types/ErrorResponse';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-interface CreateRequest {
+export interface CreateRequest {
   token?: string;
+}
+
+export interface CreateResponse {
+  id: number;
+  createdAt: Date;
+  createdBy: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -25,8 +31,8 @@ export async function POST(request: NextRequest) {
       .insertInto('games')
       .values({ createdBy: token })
       .returning(['id', 'createdAt', 'createdBy'])
-      .executeTakeFirst();
-    return NextResponse.json(response);
+      .executeTakeFirstOrThrow();
+    return NextResponse.json<CreateResponse>(response);
   } catch (error) {
     console.error(error);
     return NextResponse.json<ErrorResponse>(

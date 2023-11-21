@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { ErrorResponse } from '@/types/ErrorResponse';
 import { getRanking } from '@/app/actions/util';
 
-interface RankingEntry {
+export interface RankingEntry {
   name: string;
   score: number;
 }

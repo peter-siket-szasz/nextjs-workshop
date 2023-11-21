@@ -2,7 +2,7 @@
 
 import { FormControl, Input, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import JoinGameButton from '../Buttons/JoinGameButton';
 import { useGameJoin } from '../../hooks/api/game/join';
 import { useEffect, useState } from 'react';
@@ -11,23 +11,23 @@ import LoadingSpinner from '../LoadingSpinner';
 export default function JoinGameForm() {
   const router = useRouter();
 
-  const { data: gameData, trigger, isMutating } = useGameJoin();
+  const { data: gameData, trigger, isMutating, error } = useGameJoin();
 
   const { handleSubmit, register } = useForm();
 
-  const [gameId, setGameId] = useState(null);
+  const [gameId, setGameId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (gameData && !gameData.error) {
+    if (gameData) {
       gameData.nextQuestion
         ? router.push(`/game/${gameId}/question/${gameData.nextQuestion}`)
         : router.push(`/game/${gameId}/ranking`);
     }
   });
 
-  const onSubmit = async (data: any) => {
-    trigger({ gameId: data.gameId });
-    setGameId(data.gameId);
+  const onSubmit = async (formData: FieldValues) => {
+    trigger({ gameId: formData.gameId, playerName: formData.name });
+    setGameId(formData.gameId);
   };
 
   if (isMutating) {
@@ -44,9 +44,9 @@ export default function JoinGameForm() {
         flexDirection: 'column',
       }}
     >
-      {gameData?.error && (
+      {error && (
         <Text as='b' color='brand.coral.800'>
-          {gameData.error}
+          {error}
         </Text>
       )}
       <FormControl>
