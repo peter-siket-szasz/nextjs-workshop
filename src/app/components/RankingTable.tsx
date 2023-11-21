@@ -3,6 +3,7 @@
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useRanking } from '../hooks/api/game/ranking';
 import LoadingSpinner from './LoadingSpinner';
+import { RankingEntry } from '../api/game/ranking/[gameId]/route';
 
 type Props = {
   gameId: string;
@@ -26,12 +27,13 @@ export function RankingTable({ gameId }: Props) {
           </Tr>
         </Thead>
         <Tbody>
-          {data.slice(0, 10).map((currentElement: any, index: number) => {
+          {data.slice(0, 10).map((currentElement: RankingEntry, index: number) => {
+            // TODO: Fix implementation with variable interpolation
             return (
               <Tr key={index}>
-                <Td isNumeric>{index + 1}</Td>
-                <Td>{currentElement.name || '--no name--'}</Td>
-                <Td isNumeric>{currentElement.score}</Td>
+                <Td isNumeric>Player index</Td>
+                <Td>Player name</Td>
+                <Td isNumeric>Score</Td>
               </Tr>
             );
           })}

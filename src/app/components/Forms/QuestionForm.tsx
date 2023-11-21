@@ -2,14 +2,12 @@
 
 import { Box, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import QuizAnswerButton from '../Buttons/QuizAnswerButton';
 import FancyHeading from '../FancyHeading';
 import { Question } from '@/types/Question';
-import { useQuestionId } from '../../hooks/api/game/question';
-import { useAnswer } from '@/app/hooks/api/game/answer';
-import LoadingSpinner from '../LoadingSpinner';
 import { NextButton } from '../Buttons/NextButton';
+import LoadingSpinner from '../LoadingSpinner';
+import { AnswerRequest, AnswerResponse } from '@/app/api/game/answer/route';
 
 type Props = {
   gameId: string;
@@ -17,21 +15,36 @@ type Props = {
 };
 
 export function QuestionForm({ gameId, questionId }: Props) {
-  const router = useRouter();
+  // Data fetching with fetch
+  // TODO: Refactor to make use of useSWR (why?)
+  const [dataQuestion, setDataQuestion] = useState<Question | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    fetch('').then((res) => {
+      /* Insert data handling */
+    });
+  }, [questionId]);
 
-  const { data: dataQuestion, isLoading, error } = useQuestionId(questionId);
-  const { data: dataGameAnswer, trigger } = useAnswer();
+  // TODO: Post request with answer
+  const [dataGameAnswer, setDataGameAnswer] = useState<AnswerResponse | undefined>(undefined);
+  const postAnswer = (req: AnswerRequest) => {
+    fetch('', {
+      method: 'POST',
+      body: JSON.stringify({
+        /* ... */
+      }),
+    }).then((res) => {
+      /* Insert data handling */
+    });
+    return {};
+  };
 
   const [selectedAnswerId, setselectedAnswerId] = useState<number | undefined>(undefined);
   const [correctAnswerId, setCorrectAnswerId] = useState<number | undefined>(undefined);
   const [nextQuestionId, setNextQuestionId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (dataGameAnswer) {
-      setselectedAnswerId(dataGameAnswer.receivedAnswer);
-      setCorrectAnswerId(dataGameAnswer.correctAnswer);
-      setNextQuestionId(dataGameAnswer.nextQuestion);
-    }
+    // TODO: Set state based on response
   }, [dataGameAnswer]);
 
   function getOptionState(answerId: number): boolean | undefined {
@@ -52,9 +65,9 @@ export function QuestionForm({ gameId, questionId }: Props) {
     return <LoadingSpinner />;
   }
 
-  if (error) {
-    return <Text>An error occured.</Text>;
-  }
+  // if (error) {
+  //   return <Text>An error occured.</Text>;
+  // }
 
   if (dataQuestion) {
     {
@@ -71,7 +84,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
                     key={answerId}
                     text={option}
                     onClick={() =>
-                      trigger({
+                      postAnswer({
                         gameId: Number(gameId),
                         questionId: Number(questionId),
                         answer: answerId,

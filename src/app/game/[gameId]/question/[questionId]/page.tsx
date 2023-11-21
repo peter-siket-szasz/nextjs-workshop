@@ -1,4 +1,4 @@
-import { QuestionForm } from '@/app/components/Forms/QuizForm';
+import { QuestionForm } from '@/app/components/Forms/QuestionForm';
 
 type Props = {
   params: {
