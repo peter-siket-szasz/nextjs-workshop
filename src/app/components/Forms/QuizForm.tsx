@@ -27,7 +27,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
   const [nextQuestionId, setNextQuestionId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (dataGameAnswer && !('error' in dataGameAnswer)) {
+    if (dataGameAnswer) {
       setselectedAnswerId(dataGameAnswer.receivedAnswer);
       setCorrectAnswerId(dataGameAnswer.correctAnswer);
       setNextQuestionId(dataGameAnswer.nextQuestion);
