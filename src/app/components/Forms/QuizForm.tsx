@@ -53,7 +53,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
   }
 
   if (error) {
-    <Text>An error occured.</Text>;
+    return <Text>An error occured.</Text>;
   }
 
   if (dataQuestion) {
@@ -64,12 +64,12 @@ export function QuestionForm({ gameId, questionId }: Props) {
           <FancyHeading text={dataQuestion?.question} fontSize='70px' />
           <Box margin='40px'>
             <SimpleGrid spacing={{ base: 5, lg: 20 }} columns={{ base: 1, lg: 2 }} justifyContent='center'>
-              {mapQuestions(dataQuestion ?? []).map((option, idx) => {
+              {mapQuestions(dataQuestion).map((option, idx) => {
                 const answerId = idx + 1;
                 return (
                   <QuizAnswerButton
                     key={answerId}
-                    text={option ?? ''}
+                    text={option}
                     onClick={() =>
                       trigger({
                         gameId: Number(gameId),

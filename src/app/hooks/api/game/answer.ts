@@ -6,11 +6,13 @@ export function useAnswer() {
     return fetch(url, {
       method: 'POST',
       body: JSON.stringify(arg),
-    }).then((res) => {
-      const r = res.json();
-      if ('error' in r) throw new Error(r.error as string);
-      return r;
-    });
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if ('error' in json) throw new Error(json.error as string);
+        return json;
+      });
   }
 
   return useSWRMutation('/api/game/answer', fetcher);
