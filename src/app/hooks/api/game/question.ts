@@ -6,7 +6,6 @@ export function useQuestionId(questionId: string) {
     return fetch(url)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         if ('error' in json) throw new Error(json.error as string);
         return json;
       });
