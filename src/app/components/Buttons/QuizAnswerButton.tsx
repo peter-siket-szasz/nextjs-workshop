@@ -13,7 +13,7 @@ const WrongAnswerStyling = {
 
 interface Props {
   text: string;
-  onClick: () => {};
+  onClick: () => void;
   state: boolean | undefined;
   isDisabled: boolean;
 }

@@ -36,7 +36,6 @@ export function QuestionForm({ gameId, questionId }: Props) {
     }).then((res) => {
       /* Insert data handling */
     });
-    return {};
   };
 
   const [selectedAnswerId, setselectedAnswerId] = useState<number | undefined>(undefined);
