@@ -20,7 +20,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
   const [dataQuestion, setDataQuestion] = useState<Question | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    fetch('').then((res) => {
+    fetch(`/api/game/question/${questionId}`).then((res) => {
       /* Insert data handling */
     });
   }, [questionId]);
@@ -28,29 +28,21 @@ export function QuestionForm({ gameId, questionId }: Props) {
   // TODO: Post request with answer
   const [dataGameAnswer, setDataGameAnswer] = useState<AnswerResponse | undefined>(undefined);
   const postAnswer = (req: AnswerRequest) => {
-    fetch('', {
+    fetch('/api/game/answer', {
       method: 'POST',
       body: JSON.stringify({
-        /* ... */
+        /* Insert request body */
       }),
     }).then((res) => {
       /* Insert data handling */
     });
   };
 
-  const [selectedAnswerId, setselectedAnswerId] = useState<number | undefined>(undefined);
-  const [correctAnswerId, setCorrectAnswerId] = useState<number | undefined>(undefined);
-  const [nextQuestionId, setNextQuestionId] = useState<number | undefined>(undefined);
-
-  useEffect(() => {
-    // TODO: Set state based on response
-  }, [dataGameAnswer]);
-
   function getOptionState(answerId: number): boolean | undefined {
-    if (correctAnswerId) {
-      if (correctAnswerId == answerId) {
+    if (dataGameAnswer?.correctAnswer) {
+      if (dataGameAnswer?.correctAnswer == answerId) {
         return true;
-      } else if (selectedAnswerId == answerId) {
+      } else if (dataGameAnswer?.receivedAnswer == answerId) {
         return false;
       } else {
         return undefined;
@@ -90,16 +82,20 @@ export function QuestionForm({ gameId, questionId }: Props) {
                       })
                     }
                     state={getOptionState(answerId)}
-                    isDisabled={!!selectedAnswerId}
+                    isDisabled={!!dataGameAnswer?.receivedAnswer}
                   />
                 );
               })}
             </SimpleGrid>
             <Box mt={5} display='flex' justifyContent='flex-end'>
               <NextButton
-                href={nextQuestionId ? `/game/${gameId}/question/${nextQuestionId}` : `/game/${gameId}/ranking`}
-                isDisabled={!selectedAnswerId}
-                label={selectedAnswerId && !nextQuestionId ? 'Finish' : 'Next'}
+                href={
+                  dataGameAnswer?.nextQuestion
+                    ? `/game/${gameId}/question/${dataGameAnswer?.nextQuestion}`
+                    : `/game/${gameId}/ranking`
+                }
+                isDisabled={!dataGameAnswer?.receivedAnswer}
+                label={dataGameAnswer?.receivedAnswer && !dataGameAnswer?.nextQuestion ? 'Finish' : 'Next'}
               />
             </Box>
           </Box>
