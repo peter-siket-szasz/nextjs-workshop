@@ -1,11 +1,9 @@
-import { NextApiRequest } from 'next';
-
 import { Question, QuestionWithAnswer } from '@/types/Question';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { ErrorResponse } from '@/types/ErrorResponse';
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   try {
     const questions: QuestionWithAnswer[] = await db.selectFrom('questions').selectAll().execute();
     return NextResponse.json<Question[]>(questions.map(({ correctOptionId, ...question }) => question));
