@@ -17,7 +17,7 @@ type Props = {
 export function QuestionForm({ gameId, questionId }: Props) {
   // Data fetching with fetch
   // TODO: Refactor to make use of useSWR (why?)
-  const [dataQuestion, setDataQuestion] = useState<Question | undefined>(undefined);
+  const [dataQuestion, setDataQuestion] = useState<Question | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetch(`/api/game/question/${questionId}`).then((res) => {
@@ -26,7 +26,7 @@ export function QuestionForm({ gameId, questionId }: Props) {
   }, [questionId]);
 
   // TODO: Post request with answer
-  const [dataGameAnswer, setDataGameAnswer] = useState<AnswerResponse | undefined>(undefined);
+  const [dataGameAnswer, setDataGameAnswer] = useState<AnswerResponse | null>(null);
   const postAnswer = (req: AnswerRequest) => {
     fetch('/api/game/answer', {
       method: 'POST',
