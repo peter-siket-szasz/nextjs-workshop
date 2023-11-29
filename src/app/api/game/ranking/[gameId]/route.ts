@@ -1,6 +1,4 @@
-import { NextApiRequest } from 'next';
-
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { ErrorResponse } from '@/types/ErrorResponse';
 import { getRanking } from '@/app/actions/util';
 
@@ -9,7 +7,7 @@ export interface RankingEntry {
   score: number;
 }
 
-export async function GET(req: NextApiRequest, { params }: { params: { gameId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { gameId: string } }) {
   try {
     const players = await getRanking(parseInt(params.gameId));
     return NextResponse.json<RankingEntry[]>(players);

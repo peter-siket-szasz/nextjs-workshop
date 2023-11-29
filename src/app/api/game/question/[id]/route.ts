@@ -1,11 +1,9 @@
-import { NextApiRequest } from 'next';
-
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Question, QuestionWithAnswer } from '@/types/Question';
 import { db } from '@/lib/db';
 import { ErrorResponse } from '@/types/ErrorResponse';
 
-export async function GET(req: NextApiRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const question: QuestionWithAnswer | undefined = await db
       .selectFrom('questions')
