@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { up, down, insertQuestions, insertPlayers } from '@/lib/db/seed';
+import { up, down, insertQuestions } from '@/lib/db/seed';
 
 export async function GET() {
   await down();
@@ -7,7 +7,5 @@ export async function GET() {
   await up();
   console.log('------------');
   await insertQuestions();
-  console.log('------------');
-  await insertPlayers();
   return NextResponse.json({ result: 'OK' });
 }
