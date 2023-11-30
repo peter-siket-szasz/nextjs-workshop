@@ -11,6 +11,7 @@ This project represents a full-stack quiz app. Running this project requires a d
 To get started with the project after adding a database, run the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
@@ -21,10 +22,10 @@ npm run dev
 ### Implementation
 
 The TODOs for the workshop are listed here: 
-- Creating a title component: `app/components/FancyHeading.tsx`
-- Fetching question data (done together): `app/components/Forms/QuestionForm.tsx`
-- Posting answer and handling response: `app/components/Forms/QuestionForm.tsx`
-- Fixing ranking table implementation: `app/components/RankingTable.tsx`
+- Creating a title component: `src/app/components/FancyHeading.tsx`
+- Fetching question data (done together): `src/app/components/Forms/QuestionForm.tsx`
+- Posting answer and handling response: `src/app/components/Forms/QuestionForm.tsx`
+- Fixing ranking table implementation: `src/app/components/RankingTable.tsx`
 
 All todos can be found by searching for `TODO` in the project.
 

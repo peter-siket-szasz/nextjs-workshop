@@ -26,8 +26,9 @@ export function RankingTable({ gameId }: Props) {
           </Tr>
         </Thead>
         <Tbody>
-          {/* TODO: Fix implementation with variable interpolation */}
-          {/* Transform `data` into JSX elements with <Tr> and <Td> */}
+          {/* TODO: Implement data displaying */}
+          {/* Transform `data` into <Tr> and <Td> elements from Chakra UI */}
+          {/* You can start with data.map(element => ... ) */}
         </Tbody>
       </Table>
     </TableContainer>

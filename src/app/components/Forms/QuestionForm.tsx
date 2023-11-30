@@ -15,26 +15,31 @@ type Props = {
 };
 
 export function QuestionForm({ gameId, questionId }: Props) {
-  // Data fetching with fetch
-  // TODO: Refactor to make use of useSWR (why?)
-  const [dataQuestion, setDataQuestion] = useState<Question | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Data fetching with `fetch` and `useEffect`
+  // TODO: Implement data fetching. Example implementation together.
+  // Take a look at what the Question type looks like.
+
+  const [dataQuestion, setDataQuestion] = useState<Question | null>(null); // State to keep the Question
+  const [isLoading, setIsLoading] = useState(true); // Loading state. Set this to false once data is loaded.
   useEffect(() => {
     fetch(`/api/game/question/${questionId}`).then((res) => {
       /* Insert data handling */
     });
   }, [questionId]);
 
-  // TODO: Post request with answer
+  // TODO: Post request with answer. You can look at what AnswerResponse looks like.
   const [dataGameAnswer, setDataGameAnswer] = useState<AnswerResponse | null>(null);
+  // What do you think AnswerRequest should contain? Take a look at what it looks like and compare.
   const postAnswer = (req: AnswerRequest) => {
     fetch('/api/game/answer', {
       method: 'POST',
       body: JSON.stringify({
         /* Insert request body */
+        // Request body should contain an AnswerRequest
       }),
     }).then((res) => {
       /* Insert data handling */
+      // Should be similar to above
     });
   };
 
@@ -55,10 +60,6 @@ export function QuestionForm({ gameId, questionId }: Props) {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-
-  // if (error) {
-  //   return <Text>An error occured.</Text>;
-  // }
 
   if (dataQuestion) {
     {
